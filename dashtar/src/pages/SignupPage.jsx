@@ -16,7 +16,7 @@ const SignupPage = () => {
         <button onClick={nav} className="px-6 mt-4 bg-yellow-400 py-3 mr-5 rounded text-black font-bold">Login</button>
       </div>
 
-      <div className="min-h-screen flex items-center justify-between bg-blue-900 text-white px-10 py-10 rounded-t-4xl">
+      <div className="min-h-screen flex items-center justify-between bg-ilife-gradient text-white px-10 py-10 rounded-t-4xl">
         {/* Left Content */}
         <div className="max-w-lg">
 
