@@ -34,6 +34,12 @@ const SignupPage = () => {
         <div>
         </div>
       </div>
+
+      {/* footer */}
+      <div className="py-6 px-10 bg-blue-900 text-white flex items-center justify-between">
+        <span>Copyright © 2024 – All Rights Reserved.AIMAN COLLEGE OF ARTS AND SCIENCE FOR WOMEN</span>
+        <span>Crafted By ilife technologies</span>
+      </div>
     </div>
   );
 };
