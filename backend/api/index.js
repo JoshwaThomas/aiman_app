@@ -1,4 +1,5 @@
-require("dotenv").config();
+require("dotenv").config({ path: require("path").resolve(__dirname, "../.env") });
+//require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -8,10 +9,10 @@ const path = require("path");
 
 const { connectDB } = require("../config/db");
 const productRoutes = require("../routes/productRoutes");
-const customerRoutes = require("../routes/customerRoutes");
+//const customerRoutes = require("../routes/customerRoutes");
 const adminRoutes = require("../routes/adminRoutes");
 const orderRoutes = require("../routes/orderRoutes");
-const customerOrderRoutes = require("../routes/customerOrderRoutes");
+//const customerOrderRoutes = require("../routes/customerOrderRoutes");
 const categoryRoutes = require("../routes/categoryRoutes");
 const couponRoutes = require("../routes/couponRoutes");
 const attributeRoutes = require("../routes/attributeRoutes");
@@ -60,8 +61,8 @@ app.get("/", (req, res) => {
 app.use("/api/products/", productRoutes);
 app.use("/api/category/", categoryRoutes);
 app.use("/api/coupon/", couponRoutes);
-app.use("/api/customer/", customerRoutes);
-app.use("/api/order/", isAuth, customerOrderRoutes);
+//app.use("/api/customer/", customerRoutes);
+//app.use("/api/order/", isAuth, customerOrderRoutes);
 app.use("/api/attributes/", attributeRoutes);
 app.use("/api/setting/", settingRoutes);
 app.use("/api/currency/", isAuth, currencyRoutes);
