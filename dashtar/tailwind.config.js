@@ -64,6 +64,9 @@ const config = {
         9: "9rem",
         10: "10rem",
       },
+      backgroundImage: {
+        'ilife-gradient': 'linear-gradient(-90deg, #31b978 0%, #4eab27 100%)',
+      },
     },
   },
   variants: {
