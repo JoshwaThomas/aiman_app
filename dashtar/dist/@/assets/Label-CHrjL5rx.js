@@ -1,1 +1,0 @@
-import{j as s}from"./index-WS6oPXgt.js";const e=({label:t})=>s.jsx("label",{className:"block md:text-sm md:col-span-1 sm:col-span-2 text-lg font-bold text-gray-600 dark:text-gray-400 mb-1",children:t});export{e as L};
