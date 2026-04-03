@@ -47,11 +47,11 @@ app.set("trust proxy", 1);
 app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
 app.options("*", cors()); // include before other routes
-// app.use(cors());
-app.use(cors({
-  origin: process.env.FRONTEND_URL,
-  methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
-}))
+app.use(cors());
+// app.use(cors({
+//   origin: process.env.FRONTEND_URL,
+//   methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
+// }))
 //root route
 app.get("/", (req, res) => {
   res.send("App works properly!");
