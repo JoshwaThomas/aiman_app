@@ -89,7 +89,7 @@ const Step1 = ({ next, defaultData }) => {
 
           {/* BASIC DETAILS */}
           <Label label="Full Name (As per Certificate)" />
-          <InputArea register={register} name="name" defaultValue={adminInfo.admin?.name} />
+          <InputArea register={register} name="name" defaultValue={adminInfo.admin?.name} readOnly/>
           <Error errorName={errors.name} />
 
           <div className="grid grid-cols-2 gap-2">

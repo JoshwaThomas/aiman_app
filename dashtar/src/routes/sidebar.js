@@ -80,11 +80,11 @@ const sidebar = [
     icon: FiUsers,
     name: "Print Application",
   },
-  // {
-  //   path: "/invoice",
-  //   icon: FiUsers,
-  //   name: "Invoice",
-  // },
+  {
+    path: "/application-list",
+    icon: FiUsers,
+    name: "Application List",
+  },
   // {
   //   path: "/payment",
   //   icon: FiUsers,

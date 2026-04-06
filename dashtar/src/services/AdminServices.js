@@ -22,6 +22,9 @@ const AdminServices = {
   getApplicationPrev(id){
     return requests.get(`/admin/getApplicationPrev/${id}`);
   },
+  getAllApplication(){
+    return requests.get("/admin/getAllApplication");
+  },
   loginAdmin: async (body) => {
     return requests.post(`/admin/login`, body);
   },

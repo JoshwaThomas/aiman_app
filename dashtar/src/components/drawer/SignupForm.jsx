@@ -23,7 +23,7 @@ const SignupForm = () => {
         notifySuccess("Registration Successfully Completed!");
     }catch(err){
         console.error("Error fetching SignupForm data:", err);
-        notifyError("Error occurred while fetching data.");
+        notifyError(err.message);
     }
   };
 
