@@ -28,10 +28,12 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <Card className="w-[500px] p-6 rounded-xl  bg-blue-800 text-black">
+    <div className="flex justify-center items-center min-h-screen bg-ilife-gradient">
+      <Card className="w-[400px] p-6 rounded-xl shadow-lg bg-blue-800 text-black">
 
-        
+        <h2 className="text-center text-xl font-bold mb-4">
+          Admissions Registration
+        </h2>
 
         <form onSubmit={handleSubmit(onSubmit)}>
 
