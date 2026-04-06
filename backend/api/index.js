@@ -84,8 +84,11 @@ app.use((err, req, res, next) => {
 app.use("/static", express.static("public"));
 
 // Serve the index.html file for all routes
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
+//app.get("*", (req, res) => {
+//  res.sendFile(path.join(__dirname, "build", "index.html"));
+//});
+app.use("*", (req, res) => {
+  res.status(404).json({ message: "API route not found" });
 });
 
 const PORT = process.env.PORT || 5000;
