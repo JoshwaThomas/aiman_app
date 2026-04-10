@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { Card } from "@windmill/react-ui";
-import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import React, {useState} from "react";
+import {Card} from "@windmill/react-ui";
+import {useForm} from "react-hook-form";
+import {useHistory} from "react-router-dom";
+import {toast} from "react-toastify";
 
 import Label from "@/components/form/label/Label";
-import { notifyError, notifySuccess } from "@/utils/toast";
+import {notifyError, notifySuccess} from "@/utils/toast";
 import AdminServices from "@/services/AdminServices";
 
-const Step4Upload = ({ prev, formData }) => {
-  const { register, handleSubmit, watch } = useForm();
+const Step4Upload = ({prev, formData}) => {
+  const {register, handleSubmit, watch} = useForm();
 
   const gradType = formData?.gradType;
   const history = useHistory();
@@ -50,7 +51,7 @@ const Step4Upload = ({ prev, formData }) => {
     try {
       const finalData = new FormData();
       const appId = localStorage.getItem("appId");
-      
+
       Object.keys(formData).forEach((key) => {
         finalData.append(key, formData[key]);
       });
@@ -67,7 +68,16 @@ const Step4Upload = ({ prev, formData }) => {
       await AdminServices.updateApplication(appId, finalData);
       // const res = await AdminServices.createApplication(finalData);
 
-      notifySuccess("Application Submitted Successfully!");
+
+      toast.success({
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       history.push(`/application-preview/${appId}`);
 
     } catch (err) {
@@ -98,7 +108,7 @@ const Step4Upload = ({ prev, formData }) => {
               })}
               onChange={(e) => handlePreview(e.target.files[0], "photo")}
               className="input border border-slate-300 w-auto rounded-lg py-3"
-                        style={{ visibility: 'visible', display: 'block', height: '50px', width: '250px' }}
+              style={{visibility: 'visible', display: 'block', height: '50px', width: '250px'}}
             />
 
             {photoPreview && (
@@ -122,7 +132,7 @@ const Step4Upload = ({ prev, formData }) => {
               })}
               onChange={(e) => handlePreview(e.target.files[0], "sign")}
               className="input border border-slate-300 w-auto rounded-lg py-3"
-                        style={{ visibility: 'visible', display: 'block', height: '50px', width: '250px' }}
+              style={{visibility: 'visible', display: 'block', height: '50px', width: '250px'}}
             />
 
             {signPreview && (
@@ -145,7 +155,7 @@ const Step4Upload = ({ prev, formData }) => {
                   validateFile(file[0], "pdf", 1024 * 1024),
               })}
               className="input border border-slate-300 w-auto rounded-lg py-3"
-                        style={{ visibility: 'visible', display: 'block', height: '50px', width: '250px' }}
+              style={{visibility: 'visible', display: 'block', height: '50px', width: '250px'}}
             />
           </div>
 
@@ -166,9 +176,9 @@ const Step4Upload = ({ prev, formData }) => {
             <Label label="Community Certificate (PDF)" />
             <input
               type="file"
-              {...register("community", { required: true })}
+              {...register("community", {required: true})}
               className="input border border-slate-300 w-auto rounded-lg py-3"
-                        style={{ visibility: 'visible', display: 'block', height: '50px', width: '250px' }}
+              style={{visibility: 'visible', display: 'block', height: '50px', width: '250px'}}
             />
           </div>
 

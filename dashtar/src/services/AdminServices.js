@@ -8,7 +8,7 @@ const AdminServices = {
   registerSignUp: async (body) => {
     console.log('body of register', body)
     return requests.post("/admin/registerSignUp", body);
-  }, 
+  },
   createApplication(data) {
     return requests.post("/admin/application", data);
   },
@@ -16,14 +16,17 @@ const AdminServices = {
   updateApplication(id, data) {
     return requests.put(`/admin/application/${id}`, data);
   },
-  getApplication(id){
+  getApplication(id) {
     return requests.get(`/admin/getApplication/${id}`);
   },
-  getApplicationPrev(id){
+  getApplicationPrev(id) {
     return requests.get(`/admin/getApplicationPrev/${id}`);
   },
-  getAllApplication(){
-    return requests.get("/admin/getAllApplication");
+  getAllApplication(page = 1, limit = 10, gradType = "", pref = "") {
+    const params = new URLSearchParams({page, limit});
+    if (gradType) params.append("gradType", gradType);
+    if (pref) params.append("pref", pref);
+    return requests.get(`/admin/getAllApplication?${params.toString()}`);
   },
   loginAdmin: async (body) => {
     return requests.post(`/admin/login`, body);
@@ -74,7 +77,7 @@ const AdminServices = {
   getPayment: async (body) => {
     return requests.get("/quotation/payment/paymentgetdata", body)
   },
-  
+
   getpaymentbyrecipt: async (id) => {
     return requests.get(`/quotation/payment/getrecipet/${id}`)
   },
@@ -103,7 +106,7 @@ const AdminServices = {
 
   updateQuotation: async (id, body) => {
     console.log("update path", id, body)
-    return requests.post(`/quotation/updateQuotation/${id}`,body)
+    return requests.post(`/quotation/updateQuotation/${id}`, body)
   },
 
   getAllInvoice: async (body) => {
@@ -117,11 +120,11 @@ const AdminServices = {
   approveEnquiry: async (body) => {
     console.log("route service", body)
     return requests.post(`/admin/approveEnquiry/${body}`);
-  }, 
+  },
   rejectEnquiry: async (body) => {
     console.log("route service", body)
     return requests.post(`/admin/rejectEnquiry/${body}`);
-  }, 
+  },
   getAllStaff: async (body) => {
     return requests.get("/admin", body);
   },
@@ -139,6 +142,9 @@ const AdminServices = {
 
   deleteStaff: async (id) => {
     return requests.delete(`/admin/${id}`);
+  },
+  getApplicationAccept(id) {
+    return requests.get(`/admin/getApplicationAccept/${id}`);
   },
 };
 

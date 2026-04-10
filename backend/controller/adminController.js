@@ -3,7 +3,7 @@ const dayjs = require("dayjs");
 const utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 const jwt = require("jsonwebtoken");
-const { signInToken, tokenForVerify, sendEmail } = require("../config/auth");
+const {signInToken, tokenForVerify, sendEmail} = require("../config/auth");
 const Admin = require("../models/Admin");
 const Enquiry = require("../models/Enquiry");
 const Product = require("../models/Product");
@@ -12,7 +12,7 @@ const Application = require("../models/Application");
 
 const registerAdmin = async (req, res) => {
   try {
-    const isAdded = await Admin.findOne({ email: req.body.email });
+    const isAdded = await Admin.findOne({email: req.body.email});
     if (isAdded) {
       return res.status(403).send({
         message: "This Email already Added!",
@@ -45,7 +45,7 @@ const registerAdmin = async (req, res) => {
 const loginAdmin = async (req, res) => {
   try {
     console.log("req data", req.body.email)
-    const admin = await StudentReg.findOne({ email: req.body.email });
+    const admin = await StudentReg.findOne({email: req.body.email});
     console.log("Find data", admin)
     if (admin && bcrypt.compareSync(req.body.password, admin.password)) {
       const token = signInToken(admin);
@@ -71,7 +71,7 @@ const loginAdmin = async (req, res) => {
 };
 
 const forgetPassword = async (req, res) => {
-  const isAdded = await Admin.findOne({ email: req.body.verifyEmail });
+  const isAdded = await Admin.findOne({email: req.body.verifyEmail});
   if (!isAdded) {
     return res.status(404).send({
       message: "Admin/Staff Not found with this email!",
@@ -106,8 +106,8 @@ const forgetPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
   const token = req.body.token;
-  const { email } = jwt.decode(token);
-  const staff = await Admin.findOne({ email: email });
+  const {email} = jwt.decode(token);
+  const staff = await Admin.findOne({email: email});
 
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET_FOR_VERIFY, (err, decoded) => {
@@ -129,14 +129,14 @@ const resetPassword = async (req, res) => {
 const addStaff = async (req, res) => {
   // console.log("add staf....", req.body.staffData);
   try {
-    const isAdded = await Admin.findOne({ email: req.body.email });
+    const isAdded = await Admin.findOne({email: req.body.email});
     if (isAdded) {
       return res.status(500).send({
         message: "This Email already Added!",
       });
     } else {
       const newStaff = new Admin({
-        name: { ...req.body.name },
+        name: {...req.body.name},
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password),
         phone: req.body.phone,
@@ -159,17 +159,17 @@ const addStaff = async (req, res) => {
 
 //add Enquiry//------------------------------------------------------------//
 const addEnquiry = async (req, res) => {
-  const { EnquiryData } = req.body;
+  const {EnquiryData} = req.body;
   const {products, services} = EnquiryData;
   const date = new Date();
   console.log("add ", EnquiryData);
   try {
 
-    const foundProducts = await Product.find({ 'productId': { $in: products } });
-    const foundService = await Product.find({ 'productId': { $in: services } });
+    const foundProducts = await Product.find({'productId': {$in: products}});
+    const foundService = await Product.find({'productId': {$in: services}});
 
     const newStaff = new Enquiry({
-      com_name: EnquiryData.com_name, 
+      com_name: EnquiryData.com_name,
       email: EnquiryData.email,
       con_person: EnquiryData.con_person,
       mobile: EnquiryData.mobile,
@@ -181,10 +181,10 @@ const addEnquiry = async (req, res) => {
         productId: item.productId,
         type: item.type
       })),
-    service: foundService.map(item => ({
-          productId: item.productId,
-          type: item.type
-        })),
+      service: foundService.map(item => ({
+        productId: item.productId,
+        type: item.type
+      })),
     });
     await newStaff.save();
     res.status(200).send({
@@ -203,9 +203,9 @@ const approveEnquiry = async (req, res) => {
   const id = req.params.body;
   console.log('Approve', id)
   try {
-    const data = await Enquiry.findOne({ _id: id })
+    const data = await Enquiry.findOne({_id: id})
     if (data) {
-      const upd = await Enquiry.findOneAndUpdate({ _id: id }, { status: 1 })
+      const upd = await Enquiry.findOneAndUpdate({_id: id}, {status: 1})
       res.status(200).send({
         message: "Approved Successfully!",
       });
@@ -227,9 +227,9 @@ const rejectEnquiry = async (req, res) => {
   const id = req.params.body
   console.log("reject", id)
   try {
-    const data = await Enquiry.find({ _id: id })
+    const data = await Enquiry.find({_id: id})
     if (data) {
-      const upd = await Enquiry.findOneAndUpdate({ _id: id }, { status: 2 })
+      const upd = await Enquiry.findOneAndUpdate({_id: id}, {status: 2})
       res.status(200).send({
         message: "Reject Successfully!",
       });
@@ -267,7 +267,7 @@ const deleteEnq = async (req, res) => {
 
   console.log("delete data", req.params.body)
   const id = req.params.body;
-  Enquiry.deleteOne({ _id: id }, (err) => {
+  Enquiry.deleteOne({_id: id}, (err) => {
     if (err) {
       res.status(500).send({
         message: err.message,
@@ -285,7 +285,7 @@ const deleteEnq = async (req, res) => {
 const getAllStaff = async (req, res) => {
   // console.log('allamdin')
   try {
-    const admins = await Admin.find({}).sort({ _id: -1 });
+    const admins = await Admin.find({}).sort({_id: -1});
     res.send(admins);
   } catch (err) {
     res.status(500).send({
@@ -307,10 +307,10 @@ const getStaffById = async (req, res) => {
 
 const updateStaff = async (req, res) => {
   try {
-    const admin = await Admin.findOne({ _id: req.params.id });
+    const admin = await Admin.findOne({_id: req.params.id});
 
     if (admin) {
-      admin.name = { ...admin.name, ...req.body.name };
+      admin.name = {...admin.name, ...req.body.name};
       admin.email = req.body.email;
       admin.phone = req.body.phone;
       admin.role = req.body.role;
@@ -345,7 +345,7 @@ const updateStaff = async (req, res) => {
 };
 
 const deleteStaff = (req, res) => {
-  Admin.deleteOne({ _id: req.params.id }, (err) => {
+  Admin.deleteOne({_id: req.params.id}, (err) => {
     if (err) {
       res.status(500).send({
         message: err.message,
@@ -363,7 +363,7 @@ const updatedStatus = async (req, res) => {
     const newStatus = req.body.status;
 
     await Admin.updateOne(
-      { _id: req.params.id },
+      {_id: req.params.id},
       {
         $set: {
           status: newStatus,
@@ -382,12 +382,12 @@ const updatedStatus = async (req, res) => {
 
 const registerSignUp = async (req, res) => {
   console.log('res registerSignUp', req.body)
-  try{
-    const { name, address, city, email, mobile, dob } = req.body;
+  try {
+    const {name, address, city, email, mobile, dob} = req.body;
 
-    const existingUser = await StudentReg.findOne({ email });
+    const existingUser = await StudentReg.findOne({email});
     if (existingUser) {
-      return res.status(400).json({ message: "Email already registered" });
+      return res.status(400).json({message: "Email already registered"});
     }
 
     const formattedDOB = new Date(dob).toISOString().split("T")[0];
@@ -405,8 +405,8 @@ const registerSignUp = async (req, res) => {
     });
 
     const savedData = await newStudent.save();
-    res.status(201).json({ message: "Student Registered Successfully", data: savedData });
-  }catch(err){
+    res.status(201).json({message: "Student Registered Successfully", data: savedData});
+  } catch (err) {
     res.status(500).send({message: err.message});
   }
 }
@@ -448,10 +448,10 @@ const parseJSON = (value) => {
 };
 
 const createApplication = async (req, res) => {
-  console.log('createApplication', req.body, )
+  console.log('createApplication', req.body,)
   try {
     const data = req.body;
-    const stud = await StudentReg.findOne({ email: data.email });
+    const stud = await StudentReg.findOne({email: data.email});
     const newApp = new Application({
       ...data,
       userId: stud._id,
@@ -469,14 +469,14 @@ const createApplication = async (req, res) => {
 
   } catch (err) {
     console.error('Error creating application:', err);
-    res.status(500).json({ message: err.message });
+    res.status(500).json({message: err.message});
   }
 };
 
 const updateApplication = async (req, res) => {
   console.log('updateApplication', req.body)
   try {
-    const { id } = req.params;
+    const {id} = req.params;
     const data = req.body;
     const files = req.files;
 
@@ -486,7 +486,7 @@ const updateApplication = async (req, res) => {
     const existing = await Application.findById(id);
 
     if (existing.status === "submitted") {
-      return res.status(400).json({ message: "Application already submitted" });
+      return res.status(400).json({message: "Application already submitted"});
     }
     // 🔥 parse JSON fields
     if (data.edu) updateData.education = parseJSON(data.edu);
@@ -508,7 +508,7 @@ const updateApplication = async (req, res) => {
     const updated = await Application.findByIdAndUpdate(
       id,
       updateData,
-      { new: true }
+      {new: true}
     );
 
     res.json({
@@ -518,43 +518,91 @@ const updateApplication = async (req, res) => {
 
   } catch (err) {
     console.error('Error updating application:', err);
-    res.status(500).json({ message: err.message });
+    res.status(500).json({message: err.message});
   }
 };
 
 const getApplication = async (req, res) => {
   console.log('get Application', req.params)
-  try{
-    
+  try {
+
     const app = await Application.findById(req.params.id);
     res.json(app);
-  }catch(err){
+  } catch (err) {
     console.error('Error fetching application:', err);
-    res.status(500).json({ message: err.message });
+    res.status(500).json({message: err.message});
   }
 };
 
 const getApplicationPrev = async (req, res) => {
-  try{
-    const app = await Application.findOne({ email: req.params.id });
+  try {
+    const app = await Application.findOne({email: req.params.id});
     console.log('Application Preview', app)
     res.json(app);
-  }catch(err){
+  } catch (err) {
     console.error('Error fetching application preview:', err);
-    res.status(500).json({ message: err.message });
+    res.status(500).json({message: err.message});
+  }
+}
+// AdminServices controller
+const getAllApplication = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const validLimit = Math.min(limit, 100);
+    const skip = (page - 1) * validLimit;
+
+    // ── Build filter query from params ──────────────────────────────────────
+    const query = {};
+
+    if (req.query.gradType) {
+      query.gradType = req.query.gradType;
+    }
+
+    if (req.query.pref) {
+      query.$or = [
+        {pref1: req.query.pref},
+        {pref2: req.query.pref},
+      ];
+    }
+    // ────────────────────────────────────────────────────────────────────────
+
+    const totalDoc = await Application.countDocuments(query); //  count filtered
+    const app = await Application.find(query)
+      .skip(skip)
+      .limit(validLimit)
+      .select("name mobile gradType pref1 pref2 status")
+      .sort({createdAt: -1})
+      .lean();
+
+    res.json({
+      data: app,
+      totalDoc,
+      page,
+      limit: validLimit,
+      totalPages: Math.ceil(totalDoc / validLimit),
+    });
+  } catch (err) {
+    console.error("Error fetching applications:", err);
+    res.status(500).json({message: err.message});
+  }
+};
+
+
+// --------------------------------------Get Application Accept----------------------------
+
+const getApplicationAccept = async (req, res) => {
+  try {
+    console.log(req.params)
+    const app = await Application.findById(req.params.id);
+    console.log('Application Preview', app)
+    res.json(app);
+  } catch (err) {
+    console.error('Error fetching application preview:', err);
+    res.status(500).json({message: err.message});
   }
 }
 
-const getAllApplication = async (req, res) => {
-  try{
-    const app = await Application.find();
-    console.log('All Application', data)
-    res.json(app);
-  }catch(err){
-    console.error('Error fetching application preview:', err);
-    res.status(500).json({ message: err.message });
-  }
-}
 
 module.exports = {
   registerAdmin,
@@ -578,4 +626,5 @@ module.exports = {
   getApplication,
   getApplicationPrev,
   getAllApplication,
+  getApplicationAccept
 };
