@@ -89,7 +89,7 @@ const Step1 = ({ next, defaultData }) => {
 
           {/* BASIC DETAILS */}
           <Label label="Full Name (As per Certificate)" />
-          <InputArea register={register} name="name" defaultValue={adminInfo.admin?.name} readOnly/>
+          <InputArea register={register} name="name" defaultValue={adminInfo.admin?.name} readOnly />
           <Error errorName={errors.name} />
 
           <div className="grid grid-cols-2 gap-2">
@@ -118,7 +118,7 @@ const Step1 = ({ next, defaultData }) => {
           <InputArea register={register} name="dob" type="date" defaultValue={adminInfo.admin?.dob} />
 
           {/* SELECT FIELDS */}
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-4 gap-2">
             <div>
               <Label label="Gender" />
               <Select
@@ -152,30 +152,34 @@ const Step1 = ({ next, defaultData }) => {
                 <option>Others</option>
               </Select>
             </div>
-          </div>
 
-          <div className="grid grid-cols-3 gap-2">
-            <Select {...register("bloodGroup")} className="input text-black">
-              <option value="">Select</option>
-              <option>A+ve</option>
-              <option>A-ve</option>
-              <option>B+ve</option>
-              <option>B-ve</option>
-              <option>AB+ve</option>
-              <option>AB-ve</option>
-              <option>O+ve</option>
-              <option>O-ve</option>
-            </Select>
-            <Select {...register("religion")} className="input text-black">
-              <option value="">Select</option>
-              <option>Hindu</option>
-              <option>Christian</option>
-              <option>Mulsim</option>
-              <option>Others</option>
-            </Select>
-            <InputArea register={register} name="bloodGroup" placeholder="Blood Group" />
+            <div>
+              <Label label="Blood Group" />
+              <Select {...register("bloodGroup")} className="input text-black">
+                <option value="">Select</option>
+                <option>A+ve</option>
+                <option>A-ve</option>
+                <option>B+ve</option>
+                <option>B-ve</option>
+                <option>AB+ve</option>
+                <option>AB-ve</option>
+                <option>O+ve</option>
+                <option>O-ve</option>
+              </Select>
+            </div>
+            <div>
+              <Label label="Religion" />
+              <Select {...register("religion")} className="input text-black">
+                <option value="">Select</option>
+                <option>Hindu</option>
+                <option>Christian</option>
+                <option>Mulsim</option>
+                <option>Others</option>
+              </Select>
+            </div>
+            {/* <InputArea register={register} name="bloodGroup" placeholder="Blood Group" />
             <InputArea register={register} name="religion" placeholder="Religion" />
-            <InputArea register={register} name="motherTongue" placeholder="Mother Tongue" />
+            <InputArea register={register} name="motherTongue" placeholder="Mother Tongue" /> */}
           </div>
 
           <div className="grid grid-cols-2 gap-2">

@@ -92,7 +92,7 @@ const SignupForm = () => {
             </div>
 
             {/* Address */}
-            <div>
+            {/* <div>
               <Label label="Address" />
               <InputArea
                   register={register}
@@ -102,10 +102,10 @@ const SignupForm = () => {
                   required={true}
                 />
               <Error errorName={errors.address} />
-            </div>
+            </div> */}
 
             {/* State & City (Side by side like your UI) */}
-            <div className="grid grid-cols-2 gap-2">
+            {/* <div className="grid grid-cols-2 gap-2">
               <div>
                 <Label label="State" />
                 <InputArea
@@ -129,7 +129,7 @@ const SignupForm = () => {
                 />
                 <Error errorName={errors.city} />
               </div>
-            </div>
+            </div> */}
 
           </div>
 

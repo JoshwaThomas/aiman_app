@@ -22,6 +22,9 @@ const AdminServices = {
   getApplicationPrev(id) {
     return requests.get(`/admin/getApplicationPrev/${id}`);
   },
+  getApplicationStats(){
+    return requests.get('/admin/getApplicationStats');
+  },
   getAllApplication(page = 1, limit = 10, gradType = "", pref = "") {
     const params = new URLSearchParams({page, limit});
     if (gradType) params.append("gradType", gradType);

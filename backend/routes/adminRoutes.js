@@ -22,7 +22,8 @@ const {
   getApplication,
   getApplicationPrev,
   getAllApplication,
-  getApplicationAccept
+  getApplicationAccept,
+  getApplicationStats,
 } = require("../controller/adminController");
 const upload = require("../config/multer");
 const { passwordVerificationLimit } = require("../lib/email-sender/sender");
@@ -57,6 +58,7 @@ router.put("/application/:id", (req, res, next) => {
 router.get("/getApplication/:id", getApplication)
 router.get("/getApplicationPrev/:id", getApplicationPrev)
 router.get("/getAllApplication", getAllApplication)
+router.get("/getApplicationStats", getApplicationStats)
 
 router.post("/registerSignUp", registerSignUp);
 

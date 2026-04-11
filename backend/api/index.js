@@ -81,7 +81,8 @@ app.use((err, req, res, next) => {
 });
 
 // Serve static files from the "dist" directory
-app.use("/static", express.static("public"));
+// app.use("/static", express.static("public"));
+app.use("/uploads", express.static("uploads"));
 
 // Serve the index.html file for all routes
 //app.get("*", (req, res) => {

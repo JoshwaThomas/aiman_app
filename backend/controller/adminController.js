@@ -44,11 +44,22 @@ const registerAdmin = async (req, res) => {
 
 const loginAdmin = async (req, res) => {
   try {
+    bcrypt.hash('admin123', 10).then(hash => {
+      console.log('pass', hash);
+    });
     console.log("req data", req.body.email)
     const admin = await StudentReg.findOne({email: req.body.email});
     console.log("Find data", admin)
     if (admin && bcrypt.compareSync(req.body.password, admin.password)) {
       const token = signInToken(admin);
+      let menu = [];
+
+    if (admin.role === "admin") {
+      menu = ["Dashboard", "Application List"];
+    } else {
+      menu = ["Dashboard", "Application Form", "Print Application"];
+    }
+
       res.send({
         token,
         _id: admin._id,
@@ -56,6 +67,7 @@ const loginAdmin = async (req, res) => {
         phone: admin.phone,
         email: admin.email,
         image: admin.image,
+        menus: menu,
         admin,
       });
     } else {
@@ -603,6 +615,24 @@ const getApplicationAccept = async (req, res) => {
   }
 }
 
+const getApplicationStats = async (req, res) => {
+  try {
+    const total = await Application.countDocuments();
+    const pending = await Application.countDocuments({ status: "pending" });
+    const approved = await Application.countDocuments({ status: "approved" });
+    const rejected = await Application.countDocuments({ status: "rejected" });
+
+    res.json({
+      total,
+      pending,
+      approved,
+      rejected,
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
 module.exports = {
   registerAdmin,
@@ -626,5 +656,6 @@ module.exports = {
   getApplication,
   getApplicationPrev,
   getAllApplication,
-  getApplicationAccept
+  getApplicationAccept,
+  getApplicationStats, 
 };

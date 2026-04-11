@@ -185,14 +185,14 @@ const ApplicationPrev = () => {
                         <div className="flex gap-4 mt-2">
                             {data?.photo && (
                                 <img
-                                    src={`http://localhost:5000/uploads/${data.photo}`}
+                                    src={`http://localhost:5000/uploads/${data?.photo}`}
                                     alt="photo"
                                     className="w-24 h-24 object-cover border rounded-lg"
                                 />
                             )}
                             {data?.signature && (
                                 <img
-                                    src={`http://localhost:5000/uploads/${data.signature}`}
+                                    src={`http://localhost:5000/uploads/${data?.signature}`}
                                     alt="sign"
                                     className="w-24 h-16 object-cover border rounded-lg"
                                 />
