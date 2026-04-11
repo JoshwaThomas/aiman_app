@@ -1,1 +1,0 @@
-import{j as r,e as n}from"./index-Cyx1t4-u.js";const x=({register:s,defaultValue:t,required:a,name:e,label:i,type:o,autoComplete:p,placeholder:d})=>r.jsx(r.Fragment,{children:r.jsx(n.Input,{...s(`${e}`,{required:a?`${i} is required!`:!1}),defaultValue:t,type:o,placeholder:d,name:e,autoComplete:p,className:"mr-2 h-12 p-2 w-72 bg-white border border-slate-300"})});export{x as I};
