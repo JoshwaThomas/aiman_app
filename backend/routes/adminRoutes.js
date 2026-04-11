@@ -24,6 +24,9 @@ const {
   getAllApplication,
   getApplicationAccept,
   getApplicationStats,
+  rejectApplication,
+  acceptApplication,
+  getAllApplicationCompleted
 } = require("../controller/adminController");
 const upload = require("../config/multer");
 const { passwordVerificationLimit } = require("../lib/email-sender/sender");
@@ -106,5 +109,10 @@ router.delete("/:id", deleteStaff);
 
 // get Application Accept
 router.get("/getApplicationAccept/:id", getApplicationAccept);
+router.put("/acceptApplication/:id", acceptApplication);
+router.put("/rejectApplication/:id", rejectApplication);
+
+// get Application Completed
+router.get("/getAllApplicationCompleted", getAllApplicationCompleted);
 
 module.exports = router;

@@ -40,6 +40,11 @@ const sidebar = [
     icon: FiUsers,
     name: "Application List",
   },
+  {
+    path: "/application-completed",
+    icon: FiUsers,
+    name: "Application Completed",
+  },
 ];
 
 export default sidebar;

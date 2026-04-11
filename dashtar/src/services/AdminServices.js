@@ -22,7 +22,7 @@ const AdminServices = {
   getApplicationPrev(id) {
     return requests.get(`/admin/getApplicationPrev/${id}`);
   },
-  getApplicationStats(){
+  getApplicationStats() {
     return requests.get('/admin/getApplicationStats');
   },
   getAllApplication(page = 1, limit = 10, gradType = "", pref = "") {
@@ -30,6 +30,12 @@ const AdminServices = {
     if (gradType) params.append("gradType", gradType);
     if (pref) params.append("pref", pref);
     return requests.get(`/admin/getAllApplication?${params.toString()}`);
+  },
+  getAllApplicationCompleted(page = 1, limit = 10, gradType = "", pref = "") {
+    const params = new URLSearchParams({page, limit});
+    if (gradType) params.append("gradType", gradType);
+    if (pref) params.append("pref", pref);
+    return requests.get(`/admin/getAllApplicationCompleted?${params.toString()}`);
   },
   loginAdmin: async (body) => {
     return requests.post(`/admin/login`, body);
@@ -148,6 +154,14 @@ const AdminServices = {
   },
   getApplicationAccept(id) {
     return requests.get(`/admin/getApplicationAccept/${id}`);
+  },
+
+  acceptApplication(id) {
+    return requests.put(`/admin/acceptApplication/${id}`);
+  },
+
+  rejectApplication(id) {
+    return requests.put(`/admin/rejectApplication/${id}`);
   },
 };
 
