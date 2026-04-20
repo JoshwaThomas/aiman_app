@@ -1,0 +1,1 @@
+import{j as s}from"./index-QhBDAoqQ.js";import{Q as o}from"./Layout-CJTsrP0e.js";const x=({id:t,Icon:r,title:a,bgColor:e})=>s.jsxs(s.Fragment,{children:[s.jsx("p",{"data-tip":!0,"data-for":t,className:"text-xl",children:s.jsx(r,{})}),s.jsx(o,{id:t,backgroundColor:e,children:s.jsx("span",{className:"text-sm font-medium",children:a})})]});export{x as T};

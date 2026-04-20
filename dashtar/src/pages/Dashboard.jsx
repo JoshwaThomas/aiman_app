@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Card } from "@windmill/react-ui";
-import { useHistory } from "react-router-dom";
+import React, {useEffect, useState, useContext} from "react";
+import {Card} from "@windmill/react-ui";
+import {useHistory} from "react-router-dom";
 
-import { AdminContext } from "@/context/AdminContext";
+import {AdminContext} from "@/context/AdminContext";
 import AdminServices from "@/services/AdminServices";
 
 const Dashboard = () => {
   const history = useHistory();
 
-  const { state } = useContext(AdminContext);
-  const { adminInfo } = state;
+  const {state} = useContext(AdminContext);
+  const {adminInfo} = state;
 
   const [app, setApp] = useState(null);
   const [stats, setStats] = useState({});
@@ -36,12 +36,22 @@ const Dashboard = () => {
   const fetchStats = async () => {
     try {
       const res = await AdminServices.getApplicationStats();
-      setStats(res.data);
+      console.log("Stats:", res.data);
+      setStats(res);
     } catch (err) {
       console.error(err);
     }
   };
-
+  if (adminInfo?.role === "admin") {
+    if (!stats?.total) {
+      return (
+        <div className="p-6">
+          <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+          <p className="text-gray-500">Loading statistics...</p>
+        </div>
+      );
+    }
+  }
   return (
     <div className="p-6">
 
@@ -49,7 +59,7 @@ const Dashboard = () => {
       {adminInfo?.role === "admin" ? (
         <div className="grid md:grid-cols-4 gap-6">
 
-          <Card className="p-6 bg-blue-500 text-white">
+          <Card className="p-6 bg-[#3b82f6] text-white">
             <h2>Total Applications</h2>
             <p className="text-2xl font-bold">{stats.total || 0}</p>
           </Card>
@@ -59,12 +69,12 @@ const Dashboard = () => {
             <p className="text-2xl font-bold">{stats.pending || 0}</p>
           </Card>
 
-          <Card className="p-6 bg-green-500 text-white">
+          <Card className="p-6 bg-[#10b981] text-white">
             <h2>Approved</h2>
             <p className="text-2xl font-bold">{stats.approved || 0}</p>
           </Card>
 
-          <Card className="p-6 bg-red-500 text-white">
+          <Card className="p-6 bg-[#ef4444] text-white">
             <h2>Rejected</h2>
             <p className="text-2xl font-bold">{stats.rejected || 0}</p>
           </Card>
@@ -72,7 +82,7 @@ const Dashboard = () => {
         </div>
       ) : (
 
-      /* ================= STUDENT DASHBOARD ================= */
+        /* ================= STUDENT DASHBOARD ================= */
 
         <div className="grid md:grid-cols-2 gap-6">
 
@@ -97,13 +107,12 @@ const Dashboard = () => {
                 <p>
                   Status:
                   <span
-                    className={`ml-2 font-bold ${
-                      app.status === "approved"
+                    className={`ml-2 font-bold ${app.status === "approved"
                         ? "text-green-600"
                         : app.status === "rejected"
-                        ? "text-red-600"
-                        : "text-yellow-600"
-                    }`}
+                          ? "text-red-600"
+                          : "text-yellow-600"
+                      }`}
                   >
                     {app.status?.toUpperCase()}
                   </span>

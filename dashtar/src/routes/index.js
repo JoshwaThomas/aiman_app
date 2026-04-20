@@ -36,6 +36,7 @@ const ApplicationPreview = lazy(() => import("@/pages/ApplicationPreview"));
 const ApplicationPrev = lazy(() => import("@/pages/ApplicationPrev"));
 const ApplicationList = lazy(() => import("@/pages/ApplicationList"));
 const AcceptApplication = lazy(() => import("@/pages/AcceptApplication"));
+const ApplicationCompleted = lazy(() => import("@/pages/ApplicationCompleted"));
 /*
 //  * ⚠ These are internal routes!
 //  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -177,6 +178,10 @@ const routes = [
   {
     path: "/application-accept/:id",
     component: AcceptApplication,
+  },
+  {
+    path: "/application-completed",
+    component: ApplicationCompleted,
   },
 ];
 

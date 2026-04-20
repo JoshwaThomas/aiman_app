@@ -80,6 +80,7 @@
     "socket.io-client": "^4.7.2",
     "styled-components": "^6.1.14",
     "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.26.24",
     "tailwind-scrollbar-hide": "^1.1.7",
     "to-words": "^4.2.0"
   },

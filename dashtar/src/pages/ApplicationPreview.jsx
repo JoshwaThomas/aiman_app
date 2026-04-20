@@ -16,6 +16,7 @@ const ApplicationPreview = () => {
 
   const fetchData = async () => {
     try {
+      console.log("Fetching application with ID:", id);
       const res = await AdminServices.getApplication(id);
       const app = res || {};
 

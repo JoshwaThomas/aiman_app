@@ -54,11 +54,11 @@ const loginAdmin = async (req, res) => {
       const token = signInToken(admin);
       let menu = [];
 
-    if (admin.role === "admin") {
-      menu = ["Dashboard", "Application List"];
-    } else {
-      menu = ["Dashboard", "Application Form", "Print Application"];
-    }
+      if (admin.role === "admin") {
+        menu = ["Dashboard", "Application List", "Application Completed"];
+      } else {
+        menu = ["Dashboard", "Application Form", "Print Application"];
+      }
 
       res.send({
         token,
@@ -68,6 +68,7 @@ const loginAdmin = async (req, res) => {
         email: admin.email,
         image: admin.image,
         menus: menu,
+        role: admin.role,
         admin,
       });
     } else {
@@ -618,10 +619,10 @@ const getApplicationAccept = async (req, res) => {
 const getApplicationStats = async (req, res) => {
   try {
     const total = await Application.countDocuments();
-    const pending = await Application.countDocuments({ status: "pending" });
-    const approved = await Application.countDocuments({ status: "approved" });
-    const rejected = await Application.countDocuments({ status: "rejected" });
-
+    const pending = await Application.countDocuments({status: "pending"});
+    const approved = await Application.countDocuments({status: "approved"});
+    const rejected = await Application.countDocuments({status: "rejected"});
+    // console.log('Stats:', { total, pending, approved, rejected });
     res.json({
       total,
       pending,
@@ -630,9 +631,85 @@ const getApplicationStats = async (req, res) => {
     });
 
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({message: err.message});
   }
 };
+
+const acceptApplication = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const updated = await Application.findByIdAndUpdate(
+      id,
+      {status: "approved"},
+      {new: true}
+    );
+    res.json(updated);
+  } catch (err) {
+    console.error('Error accepting application:', err);
+    res.status(500).json({message: err.message});
+  }
+};
+
+const rejectApplication = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const updated = await Application.findByIdAndUpdate(
+      id,
+      {status: "rejected"},
+      {new: true}
+    );
+    res.json(updated);
+  } catch (err) {
+    console.error('Error rejecting application:', err);
+    res.status(500).json({message: err.message});
+  }
+};
+
+const getAllApplicationCompleted = async (req, res) => {
+  try {
+    // console.log('getAllApplicationCompleted', req.query)
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const validLimit = Math.min(limit, 100);
+    const skip = (page - 1) * validLimit;
+
+    // ── Build filter query from params ──────────────────────────────────────
+    const query = {};
+
+    if (req.query.gradType) {
+      query.status = req.query.gradType;
+    }
+
+    // if (req.query.pref) {
+    //   query.$or = [
+    //     {pref1: req.query.pref},
+    //     {pref2: req.query.pref},
+    //   ];
+    // }
+    // ────────────────────────────────────────────────────────────────────────
+
+    const totalDoc = await Application.countDocuments(query); //  count filtered
+    const app = await Application.find(query)
+      .skip(skip)
+      .limit(validLimit)
+      .select("name mobile gradType pref1 pref2 status")
+      .sort({createdAt: -1})
+      .lean();
+
+    res.json({
+      data: app,
+      totalDoc,
+      page,
+      limit: validLimit,
+      totalPages: Math.ceil(totalDoc / validLimit),
+    });
+  } catch (err) {
+    console.error("Error fetching applications:", err);
+    res.status(500).json({message: err.message});
+  }
+};
+
+
 
 module.exports = {
   registerAdmin,
@@ -657,5 +734,8 @@ module.exports = {
   getApplicationPrev,
   getAllApplication,
   getApplicationAccept,
-  getApplicationStats, 
+  getApplicationStats,
+  acceptApplication,
+  rejectApplication,
+  getAllApplicationCompleted
 };

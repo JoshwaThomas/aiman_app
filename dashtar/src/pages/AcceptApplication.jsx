@@ -2,7 +2,7 @@ import React, {useEffect, useState, useContext} from "react";
 import {useParams} from "react-router-dom";
 import {Card} from "@windmill/react-ui";
 import AdminServices from "@/services/AdminServices";
-
+import Swal from 'sweetalert2'
 import {AdminContext} from "@/context/AdminContext";
 import {SidebarContext} from "@/context/SidebarContext";
 
@@ -28,6 +28,7 @@ const Section = ({title, accent, children}) => (
 const Divider = () => <hr className="border-slate-100 my-6" />;
 
 const ApplicationPrev = () => {
+    const {id} = useParams();
     const {state} = useContext(AdminContext);
     const {adminInfo} = state;
     console.log('adminInfo', adminInfo);
@@ -42,8 +43,9 @@ const ApplicationPrev = () => {
 
     const fetchData = async () => {
         try {
-            const id = adminInfo?.email;
-            const res = await AdminServices.getApplicationPrev(id);
+            console.log("Fetching application with ID:", id);
+            // const id = adminInfo?.email;
+            const res = await AdminServices.getApplicationAccept(id);
             const app = res || {};
 
             setData(app);
@@ -53,6 +55,31 @@ const ApplicationPrev = () => {
         } finally {
             setLoading(false);
         }
+    };
+    const handleAccept = async () => {
+        try {
+            // Call the API to accept the application
+            const res = await AdminServices.acceptApplication(id);
+            Swal.fire({
+            icon: 'success',
+            title: 'Application Accepted',
+            text: 'The application has been accepted successfully.',
+        });
+        } catch (err) {
+            console.error("Accept error:", err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to accept the application.',
+            });
+        }
+    };
+    const handleReject = async () => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Application Rejected',
+            text: 'The application has been rejected successfully.',
+        });
     };
 
     if (loading) {
@@ -285,12 +312,26 @@ const ApplicationPrev = () => {
                     <p className="text-xs text-slate-400">
                         Last updated: {new Date(data.updatedAt).toLocaleString("en-IN")}
                     </p>
-                    <button
-                        onClick={() => window.print()}
-                        className="px-6 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 active:scale-95 transition-all duration-150 shadow-sm"
-                    >
-                        🖨️ Print Application
-                    </button>
+                    <div className="flex gap-3">
+                        <button
+                            onClick={() => window.print()}
+                            className="px-6 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 active:scale-95 transition-all duration-150 shadow-sm"
+                        >
+                            🖨️ Print Application
+                        </button>
+                        <button
+                            onClick={handleAccept}
+                            className="px-6 py-2 rounded-lg bg-green-500 text-white text-sm font-semibold hover:bg-green-700 active:scale-95 transition-all duration-150 shadow-sm"
+                        >
+                            Accept
+                        </button>
+                        <button
+                            onClick={handleReject}
+                            className="px-6 py-2 rounded-lg bg-red-500 text-white text-sm font-semibold hover:bg-red-700 active:scale-95 transition-all duration-150 shadow-sm"
+                        >
+                            Reject
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
