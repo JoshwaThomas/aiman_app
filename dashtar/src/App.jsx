@@ -14,6 +14,7 @@ const SignUp = lazy(() => import("@/pages/SignUp"));
 const SignupPage = lazy(() => import("@/pages/SignupPage"));
 const ForgetPassword = lazy(() => import("@/pages/ForgotPassword"));
 const ResetPassword = lazy(() => import("@/pages/ResetPassword"));
+const Quotations = lazy(() => import("@/pages/Quotations"));
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <AccessibleNavigationAnnouncer />
         <Switch>
           <Route path="/application-register" component={SignupPage} />
+          <Route path="/application" component={Quotations} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
           <Route path="/forgot-password" component={ForgetPassword} />
@@ -31,7 +33,7 @@ const App = () => {
           <PrivateRoute>
             <Route path="/" component={Layout} />
           </PrivateRoute>
-          <Redirect exact from="/" to="/login" />
+          <Redirect exact from="/" to="/application-register" />
         </Switch>
       </Router>
     </>

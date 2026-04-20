@@ -12,7 +12,7 @@ const Step2Academic = ({ next, prev }) => {
     const { register, handleSubmit, setValue, watch, getValues } = useForm();
     const watchAll = watch();
     const [rows, setRows] = useState([]);
-
+    const qualificationLabels = ["SSLC", "HSC", "Graduate"];
     const qualificationType = watch("eduType");
 
     // 🔥 Set rows based on selection
@@ -119,7 +119,7 @@ const Step2Academic = ({ next, prev }) => {
                     {rows.map((row, index) => (
                         <div key={row.id} className="border p-3 rounded bg-gray-300">
 
-                            <h4 className="mb-2">Qualification {index + 1}</h4>
+                            <h4 className="mb-2"> {qualificationLabels[index] || `Qualification ${index + 1}`} </h4>
 
                             <div className="grid grid-cols-2 gap-2">
 

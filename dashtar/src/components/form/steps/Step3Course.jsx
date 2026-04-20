@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Card } from "@windmill/react-ui";
 import { useForm } from "react-hook-form";
+import { Select } from "@windmill/react-ui";
 
 import Label from "@/components/form/label/Label";
 import { notifyError, notifySuccess } from "@/utils/toast";
@@ -67,37 +68,48 @@ const Step3Course = ({ next, prev }) => {
                     {/* Graduation Type */}
                     <div>
                         <Label label="Select Graduation" />
-                        <select {...register("gradType")} className="input text-black">
+                        {/* <Select
+                                        // name={gender}
+                                        {...register("gender")}
+                                      >
+                                        <option value="" defaultValue hidden>
+                                          Select type
+                                        </option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Others</option>
+                                      </Select> */}
+                        <Select {...register("gradType")} className="input text-black">
                             <option value="">Select</option>
                             <option value="UG">UG</option>
                             <option value="PG">PG</option>
-                        </select>
+                        </Select>
                     </div>
 
                     {/* Preference 1 */}
                     <div>
                         <Label label="Preference 1" />
-                        <select {...register("pref1")} className="input text-black">
+                        <Select {...register("pref1")} className="input text-black">
                             <option value="">Select Course</option>
                             {courses.map((course, index) => (
                                 <option key={index} value={course}>
                                     {course}
                                 </option>
                             ))}
-                        </select>
+                        </Select>
                     </div>
 
                     {/* Preference 2 */}
                     <div>
                         <Label label="Preference 2" />
-                        <select {...register("pref2")} className="input text-black">
+                        <Select {...register("pref2")} className="input text-black">
                             <option value="">Select Course</option>
                             {courses.map((course, index) => (
                                 <option key={index} value={course}>
                                     {course}
                                 </option>
                             ))}
-                        </select>
+                        </Select>
                     </div>
 
                     {/* BUTTONS */}
@@ -111,7 +123,7 @@ const Step3Course = ({ next, prev }) => {
                         </button>
 
                         <button className="px-3 mt-4 bg-yellow-400 py-2 rounded text-black font-bold">
-                            Save & Continue
+                             Submit Application
                         </button>
                     </div>
 

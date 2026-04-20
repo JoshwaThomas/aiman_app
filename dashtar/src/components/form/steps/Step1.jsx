@@ -27,6 +27,38 @@ const Step1 = ({ next, defaultData }) => {
 
   const selectedCountry = watch("country");
   const selectedState = watch("state");
+  const preference = watch("hostel");
+
+  const getDynamicField = () => {
+    switch (preference) {
+      case "Hostel":
+        return {
+          label: "Room Type",
+          // name: "roomType",
+          options: ["Normal", "Attached Bathroom", "A/C Room"],
+        };
+
+      case "Bus":
+        return {
+          label: "Select Bus Route",
+          // name: "busRoute",
+          options: ["Route 1", "Route 2", "Route 3"], // replace with your array
+        };
+
+      case "Self":
+        return {
+          label: "Self Type",
+          // name: "selfType",
+          options: ["By Walk", "Two Wheeler", "With Parents"],
+        };
+
+      default:
+        return null;
+    }
+  };
+
+  const dynamicField = getDynamicField();
+
 
   useEffect(() => {
     axios.get("https://api.countrystatecity.in/v1/countries", {
@@ -184,14 +216,32 @@ const Step1 = ({ next, defaultData }) => {
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <Label label="Hostel Required?" />
+              <Label label="Prefer what you want(Hostel/Bus/Self)?" />
               <Select {...register("hostel")} className="input text-black">
-                <option>Yes</option>
-                <option>No</option>
+                <option>Hostel</option>
+                <option>Bus</option>
+                <option>Self</option>
               </Select>
             </div>
 
-            <div>
+            {dynamicField && (
+              <div>
+                <Label label={dynamicField.label} />
+                <Select
+                  {...register("adSource")} // you can change the name as needed
+                  className="input text-black"
+                >
+                  <option value="">Select</option>
+                  {dynamicField.options.map((opt, i) => (
+                    <option key={i} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </Select>
+              </div>
+            )}
+
+            {/* <div>
               <Label label="Advertisement Source" />
               <Select {...register("adSource")} className="input text-black">
                 <option>Magazine</option>
@@ -199,7 +249,7 @@ const Step1 = ({ next, defaultData }) => {
                 <option>Newspaper</option>
                 <option>Student/Alumni</option>
               </Select>
-            </div>
+            </div> */}
           </div>
 
           {/* FATHER DETAILS */}
