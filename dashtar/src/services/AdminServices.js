@@ -31,6 +31,13 @@ const AdminServices = {
     if (pref) params.append("pref", pref);
     return requests.get(`/admin/getAllApplication?${params.toString()}`);
   },
+  getAllRegStudents(page = 1, limit = 10, gradType = "", pref = "" ,name = "") {
+    const params = new URLSearchParams({page, limit});
+    if (gradType) params.append("gradType", gradType);
+    if (pref) params.append("pref", pref);
+    if (name) params.append("name", name);
+    return requests.get(`/admin/getAllRegStudents?${params.toString()}`);
+  },
   getAllApplicationCompleted(page = 1, limit = 10, gradType = "", pref = "") {
     const params = new URLSearchParams({page, limit});
     if (gradType) params.append("gradType", gradType);

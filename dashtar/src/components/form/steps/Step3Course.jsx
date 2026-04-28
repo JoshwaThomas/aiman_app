@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import { Card } from "@windmill/react-ui";
-import { useForm } from "react-hook-form";
-import { Select } from "@windmill/react-ui";
+import React, {useState} from "react";
+import {Card} from "@windmill/react-ui";
+import {useForm} from "react-hook-form";
+import {Select} from "@windmill/react-ui";
+import { toast } from "react-toastify";
+import {useHistory} from "react-router-dom";
 
 import Label from "@/components/form/label/Label";
-import { notifyError, notifySuccess } from "@/utils/toast";
+import {notifyError, notifySuccess} from "@/utils/toast";
 import AdminServices from "@/services/AdminServices";
 
 
-const Step3Course = ({ next, prev }) => {
-    const { register, handleSubmit, watch } = useForm();
-
+const Step3Course = ({next, prev}) => {
+    const {register, handleSubmit, watch} = useForm();
+    const history = useHistory();
     const gradType = watch("gradType");
 
     // 🎯 Course Lists
@@ -48,9 +50,21 @@ const Step3Course = ({ next, prev }) => {
 
             // notifySuccess("Step 3 Saved");
 
-            next(data);
+            // next(data);
+            console.log('data', data)
+            toast.success({
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            history.push(`/application-preview/${appId}`);
 
         } catch (err) {
+            console.log("ERROR:", err);
             notifyError("Step 3 failed");
         }
     };
@@ -123,7 +137,7 @@ const Step3Course = ({ next, prev }) => {
                         </button>
 
                         <button className="px-3 mt-4 bg-yellow-400 py-2 rounded text-black font-bold">
-                             Submit Application
+                            Submit Application
                         </button>
                     </div>
 

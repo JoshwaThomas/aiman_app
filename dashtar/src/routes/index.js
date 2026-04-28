@@ -1,3 +1,4 @@
+import RegistrationList from "@/pages/RegistrationList";
 import { lazy } from "react";
 
 // use lazy for better code splitting
@@ -52,6 +53,10 @@ const routes = [
   {
     path: "/dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/registration-list",
+    component: RegistrationList,
   },
   {
     path: "/pending",

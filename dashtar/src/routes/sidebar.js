@@ -26,6 +26,11 @@ const sidebar = [
     name: "Dashboard", // name that appear in Sidebar
   },
   {
+    path: "/registration-list", // the url
+    icon: FiGrid, // icon
+    name: "Registration List", // name that appear in Sidebar
+  },
+  {
     path: "/application",
     icon: FiUsers,
     name: "Application Form",

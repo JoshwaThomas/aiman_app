@@ -22,6 +22,7 @@ const {
   getApplication,
   getApplicationPrev,
   getAllApplication,
+  getAllRegStudents,
   getApplicationAccept,
   getApplicationStats,
   rejectApplication,
@@ -114,5 +115,7 @@ router.put("/rejectApplication/:id", rejectApplication);
 
 // get Application Completed
 router.get("/getAllApplicationCompleted", getAllApplicationCompleted);
+router.get("/getAllRegStudents", getAllRegStudents)
+
 
 module.exports = router;

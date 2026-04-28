@@ -15,6 +15,7 @@ const SignupPage = lazy(() => import("@/pages/SignupPage"));
 const ForgetPassword = lazy(() => import("@/pages/ForgotPassword"));
 const ResetPassword = lazy(() => import("@/pages/ResetPassword"));
 const Quotations = lazy(() => import("@/pages/Quotations"));
+const ApplicationPrev = lazy(() => import("@/pages/ApplicationPrev"));
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Switch>
           <Route path="/application-register" component={SignupPage} />
           <Route path="/application" component={Quotations} />
+          <Route path="/application-preview/:id" component={ApplicationPrev} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
           <Route path="/forgot-password" component={ForgetPassword} />

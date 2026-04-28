@@ -57,29 +57,61 @@ const Dashboard = () => {
 
       {/* ================= ADMIN DASHBOARD ================= */}
       {adminInfo?.role === "admin" ? (
-        <div className="grid md:grid-cols-4 gap-6">
+        <div>
+          <div className="border rounded-md p-5 bg-slate-300">
+            <h2 className="text-2xl font-bold mb-4">UG</h2>
+            <div className="grid md:grid-cols-4 gap-6">
 
-          <Card className="p-6 bg-[#3b82f6] text-white">
-            <h2>Total Applications</h2>
-            <p className="text-2xl font-bold">{stats.total || 0}</p>
-          </Card>
+              <Card className="p-6 bg-[#3b82f6]">
+                <h2>Total Applications</h2>
+                <p className="text-2xl font-bold">{stats.total || 0}</p>
+              </Card>
 
-          <Card className="p-6 bg-yellow-500 text-white">
-            <h2>Pending</h2>
-            <p className="text-2xl font-bold">{stats.pending || 0}</p>
-          </Card>
+              <Card className="p-6 bg-yellow00">
+                <h2>Pending</h2>
+                <p className="text-2xl font-bold">{stats.pending || 0}</p>
+              </Card>
 
-          <Card className="p-6 bg-[#10b981] text-white">
-            <h2>Approved</h2>
-            <p className="text-2xl font-bold">{stats.approved || 0}</p>
-          </Card>
+              <Card className="p-6 bg-[#10b981]">
+                <h2>Approved</h2>
+                <p className="text-2xl font-bold">{stats.approved || 0}</p>
+              </Card>
 
-          <Card className="p-6 bg-[#ef4444] text-white">
-            <h2>Rejected</h2>
-            <p className="text-2xl font-bold">{stats.rejected || 0}</p>
-          </Card>
+              <Card className="p-6 bg-[#ef4444]">
+                <h2>Rejected</h2>
+                <p className="text-2xl font-bold">{stats.rejected || 0}</p>
+              </Card>
 
+            </div>
+          </div>
+          <div className="mt-10 border rounded-md p-5 bg-slate-300">
+            <h2 className="text-2xl font-bold mb-4">PG</h2>
+            <div className="grid md:grid-cols-4 gap-6">
+
+              <Card className="p-6 bg-[#3b82f6]">
+                <h2>Total Applications</h2>
+                <p className="text-2xl font-bold">{stats.total1 || 0}</p>
+              </Card>
+
+              <Card className="p-6 bg-yellow00">
+                <h2>Pending</h2>
+                <p className="text-2xl font-bold">{stats.pending1 || 0}</p>
+              </Card>
+
+              <Card className="p-6 bg-[#10b981]">
+                <h2>Approved</h2>
+                <p className="text-2xl font-bold">{stats.approved1 || 0}</p>
+              </Card>
+
+              <Card className="p-6 bg-[#ef4444]">
+                <h2>Rejected</h2>
+                <p className="text-2xl font-bold">{stats.rejected1 || 0}</p>
+              </Card>
+
+            </div>
+          </div>
         </div>
+
       ) : (
 
         /* ================= STUDENT DASHBOARD ================= */
@@ -108,10 +140,10 @@ const Dashboard = () => {
                   Status:
                   <span
                     className={`ml-2 font-bold ${app.status === "approved"
-                        ? "text-green-600"
-                        : app.status === "rejected"
-                          ? "text-red-600"
-                          : "text-yellow-600"
+                      ? "text-green-600"
+                      : app.status === "rejected"
+                        ? "text-red-600"
+                        : "text-yellow-600"
                       }`}
                   >
                     {app.status?.toUpperCase()}

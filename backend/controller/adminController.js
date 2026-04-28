@@ -55,7 +55,7 @@ const loginAdmin = async (req, res) => {
       let menu = [];
 
       if (admin.role === "admin") {
-        menu = ["Dashboard", "Application List", "Application Completed"];
+        menu = ["Dashboard", "Registration List", "Application List", "Application Completed"];
       } else {
         menu = ["Dashboard", "Application Form", "Print Application"];
       }
@@ -601,6 +601,55 @@ const getAllApplication = async (req, res) => {
   }
 };
 
+// --------------------------------------Get All Registered Students----------------------------
+const getAllRegStudents = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const validLimit = Math.min(limit, 100);
+    const skip = (page - 1) * validLimit;
+
+    const conditions = [];
+
+    // Always exclude Admin
+    conditions.push({ name: { $ne: "Admin" } });
+
+    if (req.query.gradType) {
+      conditions.push({ gradType: req.query.gradType });
+    }
+
+    if (req.query.pref) {
+      conditions.push({
+        $or: [{ pref1: req.query.pref }, { pref2: req.query.pref }]
+      });
+    }
+
+    if (req.query.name) {
+      conditions.push({ name: { $regex: req.query.name, $options: "i" } });
+    }
+
+    const query = { $and: conditions };
+
+    const totalDoc = await StudentReg.countDocuments(query);
+    const app = await StudentReg.find(query)
+      .skip(skip)
+      .limit(validLimit)
+      .select("name mobile email")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    res.json({
+      data: app,
+      totalDoc,
+      page,
+      limit: validLimit,
+      totalPages: Math.ceil(totalDoc / validLimit),
+    });
+  } catch (err) {
+    console.error("Error fetching registered students:", err);
+    res.status(500).json({ message: err.message });
+  }
+};
 
 // --------------------------------------Get Application Accept----------------------------
 
@@ -618,17 +667,28 @@ const getApplicationAccept = async (req, res) => {
 
 const getApplicationStats = async (req, res) => {
   try {
-    const total = await Application.countDocuments();
-    const pending = await Application.countDocuments({status: "pending"});
-    const approved = await Application.countDocuments({status: "approved"});
-    const rejected = await Application.countDocuments({status: "rejected"});
+    const total = await Application.countDocuments({gradType: "UG", gradType: "UG"});
+    const pending = await Application.countDocuments({status: "pending", gradType: "UG"});
+    const approved = await Application.countDocuments({status: "approved", gradType: "UG"});
+    const rejected = await Application.countDocuments({status: "rejected", gradType: "UG"});
     // console.log('Stats:', { total, pending, approved, rejected });
+    const total1 = await Application.countDocuments({gradType: "UG", gradType: "PG"});
+    const pending1 = await Application.countDocuments({status: "pending", gradType: "PG"});
+    const approved1 = await Application.countDocuments({status: "approved", gradType: "PG"});
+    const rejected1 = await Application.countDocuments({status: "rejected", gradType: "PG"});
+
     res.json({
       total,
       pending,
       approved,
       rejected,
+      total1,
+      pending1,
+      approved1,
+      rejected1
     });
+
+
 
   } catch (err) {
     res.status(500).json({message: err.message});
@@ -737,5 +797,6 @@ module.exports = {
   getApplicationStats,
   acceptApplication,
   rejectApplication,
-  getAllApplicationCompleted
+  getAllApplicationCompleted,
+  getAllRegStudents
 };
