@@ -116,14 +116,25 @@ const Step1 = ({next, defaultData, type, openDetails, setOpenDetails, appId, set
   const dynamicField = getDynamicField();
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-blue-90 p-[50px] border rounded-lg shadow-lg">
-      <Card className="w-full p-6 text-black">
+    <div className="flex justify-center items-center min-h-screen bg-blue-90 md:p-[50px] border rounded-lg shadow-lg">
+      <Card className="w-full p-3 text-black">
 
         {/* ══════════ FORM 1 — Basic Info ══════════ */}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mb-10">
+        <form onSubmit={handleSubmit(onSubmit)} className="mb-10">
+          <div className="hidden">
+            <Label label="Select Graduation" />
+            <Select {...register("gradType")} value={type} className="input text-black">
+              <option value="">Select</option>
+              <option value="UG">UG</option>
+              <option value="PG">PG</option>
+            </Select>
+          </div>
 
+          <div className="px-5 py-2 bg-green-100 mb-3">
+            <h2 className="text-lg font-bold text-gray-600">Course Preference</h2>
+          </div>
           {/* Course Preference */}
-          <div className="grid grid-cols-2 gap-2 mb-4 border-2 border-gray-600 p-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4 border-2 border-gray-600 p-5">
             <div>
               <Label label="Preference 1" />
               <Select {...register("pref1", req("Preference 1"))} className="input text-black">
@@ -147,35 +158,35 @@ const Step1 = ({next, defaultData, type, openDetails, setOpenDetails, appId, set
           </div>
 
           {/* Basic Details */}
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
             <div>
               <Label label="Full Name (As per Certificate)" />
-              <Input register={register} name="name" placeholder="Full Name" validation={req("Full Name")} />
+              <Input register={register} className="h-12" name="name" placeholder="Full Name" validation={req("Full Name")} />
               <FieldError error={errors.name} />
             </div>
             <div>
               <Label label="Mobile" />
-              <Input register={register} name="mobile" placeholder="Mobile"
+              <Input register={register} name="mobile" className="h-12" placeholder="Mobile"
                 validation={{required: "Mobile is required", pattern: {value: /^[6-9]\d{9}$/, message: "Enter valid 10-digit number"}}} />
               <FieldError error={errors.mobile} />
             </div>
             <div>
               <Label label="WhatsApp" />
-              <Input register={register} name="whatsapp" placeholder="WhatsApp"
+              <Input register={register} name="whatsapp" className="h-12" placeholder="WhatsApp"
                 validation={{required: "WhatsApp is required", pattern: {value: /^[6-9]\d{9}$/, message: "Enter valid 10-digit number"}}} />
               <FieldError error={errors.whatsapp} />
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
             <div>
               <Label label="Email" />
               {/* No validation = no yellow ring */}
-              <Input register={register} name="email" type="email" placeholder="Email" />
+              <Input register={register} name="email" className="h-12" type="email" placeholder="Email" />
             </div>
             <div>
               <Label label="Date of Birth" />
-              <Input register={register} name="dob" type="date" validation={req("Date of Birth")} />
+              <Input register={register} name="dob" className="h-12" type="date" validation={req("Date of Birth")} />
               <FieldError error={errors.dob} />
             </div>
             <div>
@@ -200,7 +211,7 @@ const Step1 = ({next, defaultData, type, openDetails, setOpenDetails, appId, set
           <form onSubmit={handleSubmit(onUpdate)} className="space-y-4">
 
             {/* Community / Blood Group / Religion */}
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               <div>
                 <Label label="Community" />
                 <Select {...register("community", req("Community"))} className="input text-black">
@@ -231,7 +242,7 @@ const Step1 = ({next, defaultData, type, openDetails, setOpenDetails, appId, set
             </div>
 
             {/* Hostel / Transport */}
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <div>
                 <Label label="Prefer what you want (Hostel/Bus/Self)?" />
                 <Select {...register("hostel", req("Preference"))} className="input text-black">
@@ -256,21 +267,21 @@ const Step1 = ({next, defaultData, type, openDetails, setOpenDetails, appId, set
             <div className="px-5 py-2 bg-green-100 mb-3">
               <h2 className="text-lg font-bold text-gray-600">Father Details</h2>
             </div>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
               <div>
-                <Input register={register} name="father.name" placeholder="Name" validation={req("Father's Name")} />
+                <Input register={register} name="father.name" className="h-12" placeholder="Name" validation={req("Father's Name")} />
                 <FieldError error={errors.father?.name} />
               </div>
               <div>
-                <Input register={register} name="father.mobile" placeholder="Mobile" validation={req("Father's Mobile")} />
+                <Input register={register} name="father.mobile" className="h-12" placeholder="Mobile" validation={req("Father's Mobile")} />
                 <FieldError error={errors.father?.mobile} />
               </div>
               <div>
-                <Input register={register} name="father.occupation" placeholder="Occupation" validation={req("Father's Occupation")} />
+                <Input register={register} name="father.occupation" className="h-12" placeholder="Occupation" validation={req("Father's Occupation")} />
                 <FieldError error={errors.father?.occupation} />
               </div>
               <div>
-                <Input register={register} name="father.yearlyincom" placeholder="Annual Income" validation={req("Father's Annual Income")} />
+                <Input register={register} name="father.yearlyincom" className="h-12" placeholder="Annual Income" validation={req("Father's Annual Income")} />
                 <FieldError error={errors.father?.yearlyincom} />
               </div>
             </div>
@@ -279,10 +290,10 @@ const Step1 = ({next, defaultData, type, openDetails, setOpenDetails, appId, set
             <div className="px-5 py-2 bg-green-100 mb-3">
               <h2 className="text-lg font-bold text-gray-600">Mother's Details</h2>
             </div>
-            <div className="grid grid-cols-4 gap-2 mb-4">
-              <Input register={register} name="mother.name" placeholder="Name" />
-              <Input register={register} name="mother.mobile" placeholder="Mobile" />
-              <Input register={register} name="mother.occupation" placeholder="Occupation" />
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-4">
+              <Input register={register} name="mother.name" className="h-12" placeholder="Name" />
+              <Input register={register} name="mother.mobile" className="h-12" placeholder="Mobile" />
+              <Input register={register} name="mother.occupation" className="h-12" placeholder="Occupation" />
               <Input register={register} name="mother.yearlyincom" placeholder="Annual Income" />
             </div>
 
@@ -294,7 +305,7 @@ const Step1 = ({next, defaultData, type, openDetails, setOpenDetails, appId, set
               <Input register={register} name="guardian.name" placeholder="Name" />
               <Input register={register} name="guardian.mobile" placeholder="Mobile" />
               <Input register={register} name="guardian.occupation" placeholder="Occupation" />
-              <Input register={register} name="guardian.yearlyincom" placeholder="Annual Income" />
+              <Input register={register} className="h-12" name="guardian.yearlyincom" placeholder="Annual Income" />
             </div>
 
             {/* Address */}

@@ -54,7 +54,7 @@ const Quotations = () => {
       </div>
 
       {/*  Header */}
-      <header className=" bg-white/95 backdrop-blur-md border-b border-slate-100">
+      <header className="hidden bg-white/95 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 md:h-24 flex items-center justify-between">
 
           {/* 🔹 Logo Section */}
@@ -143,7 +143,7 @@ const Quotations = () => {
       </div>
 
       {/* 🔽 STEP CONTENT */}
-      <div className="p-6 px-[150px] py-[50px]" >
+      <div className=" md:px-[150px] md:py-[50px]" >
 
         {step === 1 && <Step1Personal next={next} defaultData={formData} type={type} openDetails={openDetails}
           setOpenDetails={setOpenDetails} appId={appId} setAppId={setAppId} 

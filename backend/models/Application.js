@@ -25,6 +25,7 @@ const applicationSchema = new mongoose.Schema(
     // ======================
     // 🧍 STEP 1: PERSONAL
     // ======================
+    applicationNumber: {type: String, unique: true, required: true},
     name: String,
     mobile: String,
     whatsapp: String,

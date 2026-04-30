@@ -9,6 +9,7 @@ const Enquiry = require("../models/Enquiry");
 const Product = require("../models/Product");
 const StudentReg = require("../models/StudentReg");
 const Application = require("../models/Application");
+const Counter = require("../models/Counter");
 
 const registerAdmin = async (req, res) => {
   try {
@@ -461,36 +462,56 @@ const parseJSON = (value) => {
 };
 
 const createApplication = async (req, res) => {
-  // console.log('createApplication', req.body,)
   try {
     const data = req.body;
-    const stud = await Application.findOne({mobile: data.mobile});
-    if (stud) {
 
-      return res.status(400).json({message: "Mobile number already used in another application"});
+    // Check duplicate mobile
+    const existing = await Application.findOne({mobile: data.mobile});
+    if (existing) {
+      return res.status(400).json({
+        message: "Mobile number already used in another application"
+      });
     }
 
+    // Get and increment sequence
+    const counter = await Counter.findOneAndUpdate(
+      {name: "applicationNumber"},
+      {$inc: {seq: 1}},
+      {new: true, upsert: true}
+    );
+
+    const seq = counter.seq;
+
+    // Generate application number
+    const year = new Date().getFullYear().toString().slice(-2);
+    const gradType = data.gradType;
+
+    const applicationNumber = `${year}${gradType}${seq}`;
+
+    // Create application
     const newApp = new Application({
       ...data,
-      // userId: stud._id,
+      applicationNumber,
       father: parseJSON(data.father),
       mother: parseJSON(data.mother),
       guardian: parseJSON(data.guardian),
     });
-    console.log("hcd", newApp)
 
     await newApp.save();
 
     res.status(201).json({
-      message: "Step 1 saved",
-      appId: newApp._id, // 🔥 IMPORTANT
+      message: "Application created successfully",
+      appId: newApp._id,
+      applicationNumber
     });
 
   } catch (err) {
-    console.error('Error creating application:', err);
+    console.error("Error creating application:", err);
     res.status(500).json({message: err.message});
   }
 };
+
+
 
 const updateApplication = async (req, res) => {
   console.log('updateApplication', req.body)
@@ -498,7 +519,7 @@ const updateApplication = async (req, res) => {
     const {id} = req.params;
     const data = req.body;
     const files = req.files;
-    console.log("check id", req.params)
+    // console.log("check id", req.params)
 
     const updateData = {
       ...data,
@@ -782,17 +803,18 @@ const checkApplicationStatus = async (req, res) => {
   try {
     const {applicationNumber, dob} = req.query;
 
-    console.log("applicationNumber:", applicationNumber);
-    console.log("dob:", dob);
+    // console.log("applicationNumber:", applicationNumber);
+    // console.log("dob:", dob);
 
     const app = await Application.findOne({
-      $or :[{mobile:applicationNumber},{applicationNumber:applicationNumber}],
+      $or: [{mobile: applicationNumber}, {applicationNumber: applicationNumber}],
       dob: dob
     });
 
     if (app) {
       res.json({
         status: app.status,
+        data: app,
         message: `Your application status is ${app.status}.`
       });
     } else {

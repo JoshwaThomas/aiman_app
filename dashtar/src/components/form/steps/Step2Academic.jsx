@@ -44,6 +44,7 @@ const Step2Academic = ({ next, prev ,appId, setAppId}) => {
         }
     };
     
+    
     console.log("is",appId)
 
     const onSubmit = async (data) => {
@@ -81,17 +82,17 @@ const Step2Academic = ({ next, prev ,appId, setAppId}) => {
                 </h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     {/* BASIC DETAILS */}
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         <div>
                             <Label label="Current Education Qualification Status" />
-                            <InputArea register={register} name="currentStatus" />
+                            <InputArea register={register}  name="currentStatus" />
                         </div>
                         <div>
                             <Label label="School/College Last Attended" />
                             <InputArea register={register} name="lastCollege" />
                         </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         <div>
                             <Label label="Year of Passing" />
                             <InputArea register={register} name="passingYear" />
@@ -103,7 +104,7 @@ const Step2Academic = ({ next, prev ,appId, setAppId}) => {
                     </div>
 
                     {/* AADHAR */}
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         <div>
                             <Label label="Aadhar Updated Recently?" />
                             <Select {...register("aadhar")} className="input text-black">

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Card} from "@windmill/react-ui";
-
+import {useHistory} from "react-router-dom";
 import Label from "@/components/form/label/Label";
 import InputArea from "@/components/form/input/InputArea";
 import Error from "@/components/form/others/Error";
@@ -16,18 +16,23 @@ const SignupForm = (props) => {
     handleSubmit,
     formState: {errors},
   } = useForm();
+  const history = useHistory();
+  const [appId, setAppId] = useState(null)
 
 
-
+  const id = "69f1f8a0559cd02a20d91ff8"
   const onSubmit = async (data) => {
 
+
     try {
-      console.log("Data", data)
+      // console.log("Data", data)
       const res = await AdminServices.checkApplicationStatus({
         applicationNumber: data.applicationNumber,
         dob: data.dob
       });
-      notifySuccess(res.message);
+      // notifySuccess(res.message, ");
+      console.log("fdhg cuyg", res)
+      history.push(`/application-preview/${res.data._id}`)
     } catch (err) {
       console.error("Error fetching SignupForm data:", err);
       notifyError(err.response.data.message);
@@ -138,7 +143,7 @@ const SignupForm = (props) => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full mt-5 bg-yellow-400 text-black py-2 rounded font-bold"
+            className="w-full mt-5 border-2 p-4 border-[#172272] text-[#172272] text-xs font-bold rounded-full hover:bg-[#172272] hover:text-white transition-all uppercase tracking-wide"
           >
             Check Status
           </button>

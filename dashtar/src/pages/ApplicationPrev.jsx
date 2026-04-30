@@ -6,6 +6,7 @@ import AdminServices from "@/services/AdminServices";
 import {AdminContext} from "@/context/AdminContext";
 import {SidebarContext} from "@/context/SidebarContext";
 import {useReactToPrint} from 'react-to-print';
+import aimanLogo from '../assets/img/aiman-logo.png';
 
 const Field = ({label, value}) => (
     <div className="flex flex-col gap-0.5">
@@ -26,7 +27,7 @@ const Section = ({title, accent, children}) => (
     </div>
 );
 
-const Divider = () => <hr className="border-slate-100 my-6" />;
+const Divider = () => <hr className="border-gray-700 my-6" />;
 
 const ApplicationPrev = () => {
     const {id} = useParams();
@@ -96,14 +97,14 @@ const ApplicationPrev = () => {
             <div className="flex items-start justify-between mb-8 flex-wrap gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-slate-800">Application Preview</h1>
-                    <p className="text-sm text-slate-500 mt-1">{data?.name}</p>
+                    {/* <p className="text-sm text-slate-500 mt-1">{data?.name}</p> */}
                 </div>
-                <div className="flex flex-col items-end gap-2">
+                {/* <div className="flex flex-col items-end gap-2">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold capitalize bg-blue-50 text-blue-600 border-blue-200">
                         <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                         {data?.status === "submitted" ? "submitted" : "pending"}
                     </span>
-                </div>
+                </div> */}
             </div>
 
             <div
@@ -117,19 +118,27 @@ const ApplicationPrev = () => {
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
                 <div ref={componentRef}>
                     {/* Course banner */}
-                    <div className="bg-gradient-to-r from-sky-500 to-sky-600 px-6 py-4 flex flex-wrap gap-6 items-center">
-                        <div>
-                            <p className="text-sky-100 text-[10px] uppercase tracking-widest font-semibold mb-0.5">1st Preference</p>
-                            <p className="text-white font-semibold">{data?.pref1 || "—"}</p>
+                    <div className="bg-gradient-to-r from-sky-500 to-sky-600 px-6 py-4 flex flex-wrap justify-between gap-6 items-center">
+                        <div className="flex flex-row justify-center items-center gap-4">
+                            <img src={aimanLogo} alt="logo" className="w-16 " />
+                            <span className="text-white font-bold">{data?.applicationNumber} </span>
+
                         </div>
-                        <div className="w-px h-10 bg-sky-400 hidden sm:block" />
-                        <div>
-                            <p className="text-sky-100 text-[10px] uppercase tracking-widest font-semibold mb-0.5">2nd Preference</p>
-                            <p className="text-white font-semibold">{data?.pref2 || "—"}</p>
+                        <div className="flex flex-col items-end gap-2">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold capitalize bg-blue-50 text-blue-600 border-blue-200">
+                                <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                                {data?.status === "submitted" ? "submitted" : "pending"}
+                            </span>
                         </div>
                     </div>
 
                     <div className="p-6">
+                        <Section className="grid grid-cols-2" title={"Course Preference"} accent="bg-sky-400">
+                            <Field label="Pref 1" value={data?.pref1 || "-"} />
+                            <Field label="Pref 2" value={data?.pref2 || "-"} />
+                        </Section>
+                        <Divider />
+
                         {/* Personal */}
                         <Section title="Personal Details" accent="bg-sky-400">
                             <Field label="Name" value={data?.name} />
@@ -142,7 +151,7 @@ const ApplicationPrev = () => {
                             {/* <Field label="Mother Tongue" value={data?.motherTongue} /> */}
                         </Section>
 
-                        <Divider />
+                        <Divider  />
 
                         {/* Address */}
                         <Section title="Address" accent="bg-teal-400">

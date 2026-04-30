@@ -24,7 +24,7 @@ const SignupPage = () => {
       {/* 🔹 Mobile Topbar (Visible only on Mobile) */}
       <div className="md:hidden bg-[#172272] text-white py-2 px-4 flex justify-between items-center text-[11px] font-bold tracking-wider uppercase">
         <a href="tel:+917339548002" className="flex items-center gap-1">
-          📞 Call Support
+          📞 +91 733 954 8002
         </a>
         <a href="https://www.aimancollege.edu.in/" target="_blank" rel="noreferrer" className="flex items-center gap-1">
           🌐 Visit Website
@@ -36,11 +36,11 @@ const SignupPage = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 md:h-24 flex items-center justify-between">
 
           {/* 🔹 Logo Section */}
-          <div className="flex-shrink-0 transition-transform duration-300 hover:scale-[1.02]">
+          <div className="flex-shrink-0 p-0 transition-transform duration-300 hover:scale-[1.02]">
             <img
               src={Logo}
               alt="Aiman College Logo"
-              className="h-12 md:h-16 lg:h-20 w-auto object-contain"
+              className="h-10 sm:h-12 md:h-14 lg:h-16 xl:h-20 w-auto object-contain"
             />
           </div>
 
@@ -53,7 +53,7 @@ const SignupPage = () => {
                 href="tel:+917339548002"
                 className="text-base font-bold text-[#172272] hover:text-[#4EAB27] transition-colors flex items-center gap-2"
               >
-                <span className="text-lg">📞</span> +91 733 954 8002
+                <span className="text-sm sm:text-lg">📞</span> +91 733 954 8002
               </a>
             </div>
 
@@ -71,18 +71,18 @@ const SignupPage = () => {
             </div>
 
             {/* 🔹 Vertical Divider (Desktop Only) */}
-            <div className="hidden md:block h-10 w-[1px] bg-slate-200"></div>
+            <div className="hidden sm:block h-10 w-[1px] bg-slate-200"></div>
 
             {/* 🔹 Primary Login Button */}
-            <button
+            {/* <button
               onClick={handleLoginNav}
               className="px-8 py-3 bg-yellow-400 text-[#172272] text-sm font-extrabold rounded-full shadow-[0_4px_14px_0_rgba(250,204,21,0.4)] hover:bg-yellow-500 hover:shadow-yellow-500/30 transition-all active:scale-95 uppercase tracking-wider"
             >
               Login
-            </button>
+            </button> */}
             <button
               onClick={() => setApplicationPopup(true)}
-              className="px-8 py-3 bg-yellow-400 text-[#172272] text-sm font-extrabold rounded-full shadow-[0_4px_14px_0_rgba(250,204,21,0.4)] hover:bg-yellow-500 hover:shadow-yellow-500/30 transition-all active:scale-95 uppercase tracking-wider"
+              className="px-8 py-3 hidden sm:block bg-yellow-400 text-[#172272] text-sm font-extrabold rounded-full shadow-[0_4px_14px_0_rgba(250,204,21,0.4)] hover:bg-yellow-500 hover:shadow-yellow-500/30 transition-all active:scale-95 uppercase tracking-wider"
             >
               Apply Now
             </button>
@@ -124,14 +124,14 @@ const SignupPage = () => {
                     href="https://www.aimancollege.edu.in/"
                     target="_blank"
                     rel="noreferrer"
-                    className="items-center gap-2 px-8 py-4 bg-[#4EAB27] hover:bg-[#3d8a1e] text-white font-bold rounded-xl shadow-xl transition-all hidden sm:block sm:w-max
+                    className="items-center gap-2 px-8 py-4 w-max bg-[#4EAB27] hover:bg-[#3d8a1e] text-white font-bold rounded-xl shadow-xl transition-all hidden sm:block sm:w-max
                     "
                   >
-                    Learn More
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    Visit Website
+                    {/* <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg> */}
                   </a>
                 </div>
-                <div  className="px-8 py-3 sm:hidden bg-yellow-400 text-[#172272] text-sm font-extrabold rounded-full shadow-[0_4px_14px_0_rgba(250,204,21,0.4)] hover:bg-yellow-500 hover:shadow-yellow-500/30 transition-all active:scale-95 uppercase tracking-wider cursor-pointer" onClick={() => setApplicationPopup(true)}>
+                <div className="px-8 py-3 sm:hidden bg-yellow-400 text-[#172272] text-sm font-extrabold rounded-full shadow-[0_4px_14px_0_rgba(250,204,21,0.4)] hover:bg-yellow-500 hover:shadow-yellow-500/30 transition-all active:scale-95 uppercase tracking-wider cursor-pointer" onClick={() => setApplicationPopup(true)}>
                   <span >Apply Now</span>
                 </div>
               </div>
