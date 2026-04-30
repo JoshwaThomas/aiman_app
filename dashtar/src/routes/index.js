@@ -71,7 +71,7 @@ const routes = [
     component: Reject
   },
   {
-    path: "/application",
+    path: "/application/:type",
     component: Quotations,
   },
   {

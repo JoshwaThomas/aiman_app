@@ -1,13 +1,21 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React, {useState} from "react";
+import {useHistory} from "react-router-dom";
 import SignupForm from "@/components/drawer/SignupForm";
 import Logo from "@/assets/img/logo/logo-dark.png";
+import ApplicationTypeModal from "@/components/modal/ApplicationTypeModal";
 
 const SignupPage = () => {
   const history = useHistory();
+  const [applicationType, setApplicationType] = useState("");
+  const [applicationPopup, setApplicationPopup] = useState(false);
 
   const handleLoginNav = () => {
     history.push("/login");
+  };
+
+
+  const handleAppNav = (type) => {
+    history.push(`/application/${type}`);
   };
 
   return (
@@ -72,6 +80,12 @@ const SignupPage = () => {
             >
               Login
             </button>
+            <button
+              onClick={() => setApplicationPopup(true)}
+              className="px-8 py-3 bg-yellow-400 text-[#172272] text-sm font-extrabold rounded-full shadow-[0_4px_14px_0_rgba(250,204,21,0.4)] hover:bg-yellow-500 hover:shadow-yellow-500/30 transition-all active:scale-95 uppercase tracking-wider"
+            >
+              Apply Now
+            </button>
           </div>
         </div>
       </header>
@@ -97,11 +111,11 @@ const SignupPage = () => {
               {/* Left Content */}
               <div className="text-white max-w-xl text-center lg:text-left">
 
-                <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+                <h1 className="text-4xl hidden sm:block md:text-6xl font-extrabold leading-tight tracking-tight">
                   Build Your <br />
                   <span className="text-yellow-400">Future Career</span>
                 </h1>
-                <p className="mt-6 text-lg text-slate-100 font-light leading-relaxed">
+                <p className="hidden sm:block mt-6 text-lg text-slate-100 font-light leading-relaxed">
                   Gain industry-ready skills with placement assistance and step into
                   success before you graduate.
                 </p>
@@ -110,11 +124,15 @@ const SignupPage = () => {
                     href="https://www.aimancollege.edu.in/"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-8 py-4 bg-[#4EAB27] hover:bg-[#3d8a1e] text-white font-bold rounded-xl shadow-xl transition-all"
+                    className="items-center gap-2 px-8 py-4 bg-[#4EAB27] hover:bg-[#3d8a1e] text-white font-bold rounded-xl shadow-xl transition-all hidden sm:block sm:w-max
+                    "
                   >
                     Learn More
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                   </a>
+                </div>
+                <div  className="px-8 py-3 sm:hidden bg-yellow-400 text-[#172272] text-sm font-extrabold rounded-full shadow-[0_4px_14px_0_rgba(250,204,21,0.4)] hover:bg-yellow-500 hover:shadow-yellow-500/30 transition-all active:scale-95 uppercase tracking-wider cursor-pointer" onClick={() => setApplicationPopup(true)}>
+                  <span >Apply Now</span>
                 </div>
               </div>
 
@@ -122,11 +140,12 @@ const SignupPage = () => {
               <div className="w-full max-w-md">
                 <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden">
                   <div className="bg-[#4BAD30] py-6 px-8 border-b border-slate-100 text-center">
-                    <h3 className="text-xl font-bold text-[#fff]">Create Your Account</h3>
+                    <h3 className="text-xl font-bold text-[#fff]">Application Status</h3>
                     <div className="w-12 h-1 bg-yellow-400 mx-auto mt-2 rounded-full"></div>
                   </div>
                   <div className="p-0">
-                    <SignupForm />
+                    <SignupForm applicationTypePopup={() => setApplicationPopup(true)} />
+
                   </div>
                 </div>
               </div>
@@ -161,7 +180,7 @@ const SignupPage = () => {
         href="https://wa.me/917339548002"
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-6 left-6 z-50 transition-transform hover:scale-110 active:scale-90"
+        className="fixed bottom-6 left-6 z-50 transition-transform hover:scale-110 active:scale-90 hidden sm:block"
       >
         <div className="bg-[#25D366] p-4 rounded-2xl shadow-[0_10px_25px_rgba(37,211,102,0.4)]">
           <svg className="w-6 h-6 fill-white" viewBox="0 0 24 24">
@@ -170,6 +189,15 @@ const SignupPage = () => {
         </div>
       </a>
 
+      {applicationPopup && (
+        <ApplicationTypeModal
+          onClose={() => setApplicationPopup(false)}
+          onSelect={(type) => {
+            setApplicationType(type);
+            handleAppNav(type);
+          }}
+        />
+      )}
     </div>
   );
 };

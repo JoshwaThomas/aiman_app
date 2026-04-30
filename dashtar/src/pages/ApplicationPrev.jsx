@@ -29,10 +29,9 @@ const Section = ({title, accent, children}) => (
 const Divider = () => <hr className="border-slate-100 my-6" />;
 
 const ApplicationPrev = () => {
-    //   const { id } = useParams();
+    const {id} = useParams();
     const {state} = useContext(AdminContext);
     const {adminInfo} = state;
-    console.log('adminInfo', adminInfo);
 
     const [data, setData] = useState({});
     const [confirmed, setConfirmed] = useState(false);
@@ -63,7 +62,7 @@ const ApplicationPrev = () => {
 
     const fetchData = async () => {
         try {
-            const id = adminInfo?.email;
+            // const id = adminInfo?.email;
             const res = await AdminServices.getApplicationPrev(id);
             const app = res || {};
 
@@ -107,6 +106,13 @@ const ApplicationPrev = () => {
                 </div>
             </div>
 
+            <div
+                className="px-6 py-2 rounded-lg w-max mb-5  bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 active:scale-95 transition-all duration-150 shadow-sm"
+
+            >
+                Update Application
+            </div>
+
             {/* Card */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
                 <div ref={componentRef}>
@@ -133,7 +139,7 @@ const ApplicationPrev = () => {
                             <Field label="DOB" value={data?.dob} />
                             <Field label="Community" value={data?.community} />
                             <Field label="Religion" value={data?.religion} />
-                            <Field label="Mother Tongue" value={data?.motherTongue} />
+                            {/* <Field label="Mother Tongue" value={data?.motherTongue} /> */}
                         </Section>
 
                         <Divider />
@@ -205,7 +211,7 @@ const ApplicationPrev = () => {
                 <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between flex-wrap gap-3">
                     <button
                         onClick={handlePrint}
-                        className="px-6 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 active:scale-95 transition-all duration-150 shadow-sm"
+                        className="px-6 py-2 rounded-lg bg-green-600 text-white text-sm font-semibold hover:bg-blue-700 active:scale-95 transition-all duration-150 shadow-sm"
                     >
                         🖨️ Print Application
                     </button>

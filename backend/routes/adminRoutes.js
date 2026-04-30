@@ -27,7 +27,8 @@ const {
   getApplicationStats,
   rejectApplication,
   acceptApplication,
-  getAllApplicationCompleted
+  getAllApplicationCompleted,
+  checkApplicationStatus
 } = require("../controller/adminController");
 const upload = require("../config/multer");
 const { passwordVerificationLimit } = require("../lib/email-sender/sender");
@@ -116,6 +117,7 @@ router.put("/rejectApplication/:id", rejectApplication);
 // get Application Completed
 router.get("/getAllApplicationCompleted", getAllApplicationCompleted);
 router.get("/getAllRegStudents", getAllRegStudents)
+router.get("/checkApplicationStatus", checkApplicationStatus)
 
 
 module.exports = router;

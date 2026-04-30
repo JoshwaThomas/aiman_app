@@ -31,7 +31,7 @@ const AdminServices = {
     if (pref) params.append("pref", pref);
     return requests.get(`/admin/getAllApplication?${params.toString()}`);
   },
-  getAllRegStudents(page = 1, limit = 10, gradType = "", pref = "" ,name = "") {
+  getAllRegStudents(page = 1, limit = 10, gradType = "", pref = "", name = "") {
     const params = new URLSearchParams({page, limit});
     if (gradType) params.append("gradType", gradType);
     if (pref) params.append("pref", pref);
@@ -170,6 +170,10 @@ const AdminServices = {
   rejectApplication(id) {
     return requests.put(`/admin/rejectApplication/${id}`);
   },
+  checkApplicationStatus(data) {
+    return requests.get(`/admin/checkApplicationStatus`, {params: data});
+  }
 };
+
 
 export default AdminServices;

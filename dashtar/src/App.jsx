@@ -25,7 +25,7 @@ const App = () => {
         <AccessibleNavigationAnnouncer />
         <Switch>
           <Route path="/application-register" component={SignupPage} />
-          <Route path="/application" component={Quotations} />
+          <Route path="/application/:type" component={Quotations} />
           <Route path="/application-preview/:id" component={ApplicationPrev} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />

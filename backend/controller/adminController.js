@@ -461,17 +461,23 @@ const parseJSON = (value) => {
 };
 
 const createApplication = async (req, res) => {
-  console.log('createApplication', req.body,)
+  // console.log('createApplication', req.body,)
   try {
     const data = req.body;
-    const stud = await StudentReg.findOne({email: data.email});
+    const stud = await Application.findOne({mobile: data.mobile});
+    if (stud) {
+
+      return res.status(400).json({message: "Mobile number already used in another application"});
+    }
+
     const newApp = new Application({
       ...data,
-      userId: stud._id,
+      // userId: stud._id,
       father: parseJSON(data.father),
       mother: parseJSON(data.mother),
       guardian: parseJSON(data.guardian),
     });
+    console.log("hcd", newApp)
 
     await newApp.save();
 
@@ -492,6 +498,7 @@ const updateApplication = async (req, res) => {
     const {id} = req.params;
     const data = req.body;
     const files = req.files;
+    console.log("check id", req.params)
 
     const updateData = {
       ...data,
@@ -549,7 +556,7 @@ const getApplication = async (req, res) => {
 
 const getApplicationPrev = async (req, res) => {
   try {
-    const app = await Application.findOne({email: req.params.id});
+    const app = await Application.findById(req.params.id);
     console.log('Application Preview', app)
     res.json(app);
   } catch (err) {
@@ -612,30 +619,30 @@ const getAllRegStudents = async (req, res) => {
     const conditions = [];
 
     // Always exclude Admin
-    conditions.push({ name: { $ne: "Admin" } });
+    conditions.push({name: {$ne: "Admin"}});
 
     if (req.query.gradType) {
-      conditions.push({ gradType: req.query.gradType });
+      conditions.push({gradType: req.query.gradType});
     }
 
     if (req.query.pref) {
       conditions.push({
-        $or: [{ pref1: req.query.pref }, { pref2: req.query.pref }]
+        $or: [{pref1: req.query.pref}, {pref2: req.query.pref}]
       });
     }
 
     if (req.query.name) {
-      conditions.push({ name: { $regex: req.query.name, $options: "i" } });
+      conditions.push({name: {$regex: req.query.name, $options: "i"}});
     }
 
-    const query = { $and: conditions };
+    const query = {$and: conditions};
 
     const totalDoc = await StudentReg.countDocuments(query);
     const app = await StudentReg.find(query)
       .skip(skip)
       .limit(validLimit)
       .select("name mobile email")
-      .sort({ createdAt: -1 })
+      .sort({createdAt: -1})
       .lean();
 
     res.json({
@@ -647,7 +654,7 @@ const getAllRegStudents = async (req, res) => {
     });
   } catch (err) {
     console.error("Error fetching registered students:", err);
-    res.status(500).json({ message: err.message });
+    res.status(500).json({message: err.message});
   }
 };
 
@@ -770,6 +777,36 @@ const getAllApplicationCompleted = async (req, res) => {
 };
 
 
+// -------------------------------Check Application Status----------------------------
+const checkApplicationStatus = async (req, res) => {
+  try {
+    const {applicationNumber, dob} = req.query;
+
+    console.log("applicationNumber:", applicationNumber);
+    console.log("dob:", dob);
+
+    const app = await Application.findOne({
+      $or :[{mobile:applicationNumber},{applicationNumber:applicationNumber}],
+      dob: dob
+    });
+
+    if (app) {
+      res.json({
+        status: app.status,
+        message: `Your application status is ${app.status}.`
+      });
+    } else {
+      res.status(404).json({
+        message: "No application found with the provided details."
+      });
+    }
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({message: err.message});
+  }
+};
+
 
 module.exports = {
   registerAdmin,
@@ -798,5 +835,6 @@ module.exports = {
   acceptApplication,
   rejectApplication,
   getAllApplicationCompleted,
-  getAllRegStudents
+  getAllRegStudents,
+  checkApplicationStatus
 };

@@ -21,12 +21,6 @@ const parentSchema = new mongoose.Schema({
 
 const applicationSchema = new mongoose.Schema(
   {
-    // 🔐 USER LINK (from login)
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      // ref: "Admin",
-      required: true,
-    },
 
     // ======================
     // 🧍 STEP 1: PERSONAL

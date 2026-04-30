@@ -1,29 +1,36 @@
-import React from "react";
-import { Card } from "@windmill/react-ui";
+import React, {useState} from "react";
+import {Card} from "@windmill/react-ui";
 
 import Label from "@/components/form/label/Label";
 import InputArea from "@/components/form/input/InputArea";
 import Error from "@/components/form/others/Error";
 import DrawerButton from "@/components/form/button/DrawerButton";
 import AdminServices from '@/services/AdminServices';
-import { useForm } from "react-hook-form";
-import { notifyError, notifySuccess } from "@/utils/toast";
+import {useForm} from "react-hook-form";
+import {notifyError, notifySuccess} from "@/utils/toast";
 
-const SignupForm = () => {
+
+const SignupForm = (props) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm();
 
+
+
   const onSubmit = async (data) => {
-    console.log("Form Data:", data);
-    try{
-        const res = await AdminServices.registerSignUp(data);
-        notifySuccess("Registration Successfully Completed!");
-    }catch(err){
-        console.error("Error fetching SignupForm data:", err);
-        notifyError(err.message);
+
+    try {
+      console.log("Data", data)
+      const res = await AdminServices.checkApplicationStatus({
+        applicationNumber: data.applicationNumber,
+        dob: data.dob
+      });
+      notifySuccess(res.message);
+    } catch (err) {
+      console.error("Error fetching SignupForm data:", err);
+      notifyError(err.response.data.message);
     }
   };
 
@@ -36,19 +43,19 @@ const SignupForm = () => {
 
             {/* Name */}
             <div>
-              <Label label="Name" />
+              <Label label="Application Number or Mobile No" />
               <InputArea
                 register={register}
-                name="name"
+                name="applicationNumber"
                 type="text"
-                placeholder="Enter your name"
+                placeholder="Enter your  number"
                 required={true}
               />
-              <Error errorName={errors.name} />
+              <Error errorName={errors.applicationNumber} />
             </div>
 
             {/* Mobile */}
-            <div>
+            {/* <div>
               <Label label="Mobile" />
               <InputArea
                 register={register}
@@ -59,10 +66,10 @@ const SignupForm = () => {
                 pattern={/^[0-9]{10}$/}
               />
               <Error errorName={errors.mobile} />
-            </div>
+            </div> */}
 
             {/* Email */}
-            <div>
+            {/* <div>
               <Label label="Email" />
               <InputArea
                 register={register}
@@ -72,9 +79,9 @@ const SignupForm = () => {
                 required={true}
               />
               <Error errorName={errors.email} />
-            </div>
+            </div> */}
 
-             <div>
+            <div>
               <Label label="DoB" />
               <InputArea
                 register={register}
@@ -133,8 +140,18 @@ const SignupForm = () => {
             type="submit"
             className="w-full mt-5 bg-yellow-400 text-black py-2 rounded font-bold"
           >
-            APPLY NOW
+            Check Status
           </button>
+
+          <div className="text-sm text-gray-600 text-center mt-4">
+            Don’t have an application yet?{" "}
+            <span
+              onClick={props.applicationTypePopup}
+              className="text-blue-600 font-semibold hover:underline cursor-pointer"
+            >
+              Apply Now
+            </span>
+          </div>
 
         </form>
       </Card>
