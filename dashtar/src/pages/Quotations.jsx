@@ -142,7 +142,7 @@ const Quotations = () => {
         </div>
       </div>
 
-      {/* 🔽 STEP CONTENT */}
+      {/* STEP CONTENT */}
       <div className=" md:px-[150px] md:py-[50px]" >
 
         {step === 1 && <Step1Personal next={next} defaultData={formData} type={type} openDetails={openDetails}

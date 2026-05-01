@@ -251,37 +251,14 @@ const ApplicationPrev = () => {
                     <Divider />
 
                     {/* Documents */}
-                    <div className="flex items-center gap-2 mb-4">
+                    {/* <div className="flex items-center gap-2 mb-4">
                         <div className="w-1 h-5 rounded-full bg-indigo-400" />
                         <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500">Uploaded Documents</h3>
-                    </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        {[
-                            {label: "Photo", key: "photo"},
-                            {label: "Signature", key: "signature"},
-                            {label: "Marksheet", key: "marksheet"},
-                            {label: "Community Certificate", key: "communityCertificate"},
-                            {label: "Provisional", key: "provisional"},
-                        ].map(({label, key}) => (
-                            <div
-                                key={key}
-                                className={`rounded-lg border px-3 py-2 text-center text-xs font-medium
-                  ${data[key]
-                                        ? "border-emerald-200 bg-emerald-50 text-emerald-600"
-                                        : "border-slate-100 bg-slate-50 text-slate-300"
-                                    }`}
-                            >
-                                <div className="text-lg mb-0.5">{data[key] ? "📄" : "—"}</div>
-                                {label}
-                                {data[key] && (
-                                    <div className="text-[9px] text-emerald-400 mt-0.5 truncate">{data[key]}</div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
+                    </div> */}
+              
 
                     {/* Photo/Signature Preview */}
-                    {(data?.photo || data?.signature) && (
+                    {/* {(data?.photo || data?.signature) && (
                         <>
                             <div className="flex items-center gap-2 mt-6 mb-4">
                                 <div className="w-1 h-5 rounded-full bg-indigo-400" />
@@ -304,7 +281,7 @@ const ApplicationPrev = () => {
                                 )}
                             </div>
                         </>
-                    )}
+                    )} */}
                 </div>
 
                 {/* Print footer */}
@@ -335,6 +312,8 @@ const ApplicationPrev = () => {
                 </div>
             </div>
         </div>
+
+        
     );
 };
 

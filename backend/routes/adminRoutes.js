@@ -28,10 +28,11 @@ const {
   rejectApplication,
   acceptApplication,
   getAllApplicationCompleted,
-  checkApplicationStatus
+  checkApplicationStatus,
+  updateApplicationStatus
 } = require("../controller/adminController");
 const upload = require("../config/multer");
-const { passwordVerificationLimit } = require("../lib/email-sender/sender");
+const {passwordVerificationLimit} = require("../lib/email-sender/sender");
 
 //register a staff
 router.post("/register", registerAdmin);
@@ -50,20 +51,21 @@ router.post("/application", createApplication);
 //   ]), createApplication);
 
 router.put("/application/:id", (req, res, next) => {
-    console.log('Pre-multer check', req.body);
-    next();
-  }, upload.fields([
-    { name: "photo", maxCount: 1 },
-    { name: "signature", maxCount: 1 },
-    { name: "marksheet", maxCount: 1 },
-    { name: "provisional", maxCount: 1 },
-    { name: "community", maxCount: 1 },
-  ]), updateApplication);
+  console.log('Pre-multer check', req.body);
+  next();
+}, upload.fields([
+  {name: "photo", maxCount: 1},
+  {name: "signature", maxCount: 1},
+  {name: "marksheet", maxCount: 1},
+  {name: "provisional", maxCount: 1},
+  {name: "community", maxCount: 1},
+]), updateApplication);
 
 router.get("/getApplication/:id", getApplication)
 router.get("/getApplicationPrev/:id", getApplicationPrev)
 router.get("/getAllApplication", getAllApplication)
 router.get("/getApplicationStats", getApplicationStats)
+router.post("/updateApplicationStatus/:id", updateApplicationStatus)
 
 router.post("/registerSignUp", registerSignUp);
 

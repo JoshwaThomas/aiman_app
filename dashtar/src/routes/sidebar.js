@@ -50,6 +50,11 @@ const sidebar = [
     icon: FiUsers,
     name: "Application Completed",
   },
+  {
+    path: "/ug-application",
+    icon: FiUsers,
+    name: "UG Application",
+  },
 ];
 
 export default sidebar;

@@ -1,4 +1,5 @@
 import RegistrationList from "@/pages/RegistrationList";
+import UGApplication from "@/pages/UGApplication";
 import { lazy } from "react";
 
 // use lazy for better code splitting
@@ -187,6 +188,10 @@ const routes = [
   {
     path: "/application-completed",
     component: ApplicationCompleted,
+  },
+  {
+    path: "/ug-application",
+    component: UGApplication,
   },
 ];
 

@@ -88,6 +88,14 @@ const applicationSchema = new mongoose.Schema(
       type: String,
       default: "pending", // pending / approved / rejected
     },
+    paymentStatus: {
+      type: String,
+      default: "unpaid", // pending / completed
+    },
+    modeOfPayment: String,
+    admissionAmount: Number,
+    mubalikkaAmount: Number,
+    admissionConfirmed:Boolean
   },
   {
     timestamps: true,

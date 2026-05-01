@@ -25,10 +25,12 @@ const AdminServices = {
   getApplicationStats() {
     return requests.get('/admin/getApplicationStats');
   },
-  getAllApplication(page = 1, limit = 10, gradType = "", pref = "") {
+  getAllApplication(page = 1, limit = 10, gradType = "", pref = "", status = "",paidStatus = "") {
     const params = new URLSearchParams({page, limit});
     if (gradType) params.append("gradType", gradType);
     if (pref) params.append("pref", pref);
+    if (status) params.append("status", status);
+    if (paidStatus) params.append("paidStatus", paidStatus);
     return requests.get(`/admin/getAllApplication?${params.toString()}`);
   },
   getAllRegStudents(page = 1, limit = 10, gradType = "", pref = "", name = "") {
@@ -172,7 +174,11 @@ const AdminServices = {
   },
   checkApplicationStatus(data) {
     return requests.get(`/admin/checkApplicationStatus`, {params: data});
-  }
+  },
+  updateApplicationStatus: async (id, body) => {
+    return requests.post(`/admin/updateApplicationStatus/${id}`, body)
+  },
+
 };
 
 

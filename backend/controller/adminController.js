@@ -56,7 +56,7 @@ const loginAdmin = async (req, res) => {
       let menu = [];
 
       if (admin.role === "admin") {
-        menu = ["Dashboard", "Registration List", "Application List", "Application Completed"];
+        menu = ["Dashboard", "Registration List", "Application List", "Application Completed", "UG Application"];
       } else {
         menu = ["Dashboard", "Application Form", "Print Application"];
       }
@@ -564,7 +564,6 @@ const updateApplication = async (req, res) => {
 };
 
 const getApplication = async (req, res) => {
-  console.log('get Application', req.params)
   try {
 
     const app = await Application.findById(req.params.id);
@@ -599,6 +598,12 @@ const getAllApplication = async (req, res) => {
     if (req.query.gradType) {
       query.gradType = req.query.gradType;
     }
+    if (req.query.status) {
+      query.status = req.query.status;
+    }
+    if (req.query.paidStatus) {
+      query.paymentStatus = req.query.paidStatus;
+    }
 
     if (req.query.pref) {
       query.$or = [
@@ -612,7 +617,7 @@ const getAllApplication = async (req, res) => {
     const app = await Application.find(query)
       .skip(skip)
       .limit(validLimit)
-      .select("name mobile gradType pref1 pref2 status")
+      .select("name mobile gradType pref1 pref2 status paymentStatus")
       .sort({createdAt: -1})
       .lean();
 
@@ -829,6 +834,48 @@ const checkApplicationStatus = async (req, res) => {
   }
 };
 
+// -------------------------------Update Application Status----------------------------
+const updateApplicationStatus = async (req, res) => {
+  try {
+    const {id} = req.params;
+
+    const {
+      status,
+      paymentStatus,
+      modeOfPayment,
+      admissionAmount,
+      mubalikkaAmount
+    } = req.body;
+
+    const updateData = {
+      status,
+      paymentStatus,
+      modeOfPayment,
+      admissionAmount,
+      mubalikkaAmount,
+    };
+
+    if (modeOfPayment && modeOfPayment !== "") {
+      updateData.admissionConfirmed = true;
+    }
+
+    const updated = await Application.findByIdAndUpdate(
+      id,
+      {$set: updateData},
+      {new: true} // return updated document
+    );
+
+    res.json({
+      message: `Application status updated successfully`,
+      data: updated
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({message: err.message});
+  }
+};
+
 
 module.exports = {
   registerAdmin,
@@ -858,5 +905,6 @@ module.exports = {
   rejectApplication,
   getAllApplicationCompleted,
   getAllRegStudents,
-  checkApplicationStatus
+  checkApplicationStatus,
+  updateApplicationStatus
 };
