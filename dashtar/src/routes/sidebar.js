@@ -41,6 +41,11 @@ const sidebar = [
     name: "Print Application",
   },
   {
+    path: "/ug-application",
+    icon: FiUsers,
+    name: "UG Application",
+  },
+  {
     path: "/application-list",
     icon: FiUsers,
     name: "Application List",
@@ -50,11 +55,7 @@ const sidebar = [
     icon: FiUsers,
     name: "Application Completed",
   },
-  {
-    path: "/ug-application",
-    icon: FiUsers,
-    name: "UG Application",
-  },
+  
 ];
 
 export default sidebar;
