@@ -7,6 +7,7 @@ import {
 import {useHistory} from "react-router-dom";
 import AnimatedContent from "@/components/common/AnimatedContent";
 import StatusModal from "@/components/modal/StatusModal";
+import * as XLSX from "xlsx";
 
 // ── Fully controlled pagination ───────────────────────────────────────────────
 function CustomPagination({currentPage, totalPages, onPageChange}) {
