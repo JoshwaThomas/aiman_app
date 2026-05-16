@@ -103,6 +103,7 @@ function UGApplication() {
         activeFilters.paidStatus,
 
       );
+      console.log('resdata', res.data)
       setTableData(res.data || []);
       setTotalDoc(res.totalDoc || 0);
       setTotalPages(res.totalPages || Math.ceil((res.totalDoc || 0) / limitData));
