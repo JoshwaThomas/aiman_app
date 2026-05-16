@@ -617,7 +617,7 @@ const getAllApplication = async (req, res) => {
     const app = await Application.find(query)
       .skip(skip)
       .limit(validLimit)
-      .select("name mobile gradType pref1 pref2 status paymentStatus")
+      .select("name applicationNumber mobile gradType pref1 pref2 status paymentStatus")
       .sort({createdAt: -1})
       .lean();
 
