@@ -60,7 +60,7 @@ function CustomPagination({currentPage, totalPages, onPageChange}) {
 function UGApplication() {
   const [gradeType, setGradeType] = useState("UG");
   const [selectedPref, setSelectedPref] = useState("");
-  const [selectedStatus, setSeletedStatus] = useState("");
+  const [selectedStatus, setSeletedStatus] = useState("pending");
   const [selectedPaidStatus, setSelectedPaidStatus] = useState("");
 
   // activeFilters = what's currently applied to the backend query
@@ -271,6 +271,7 @@ function UGApplication() {
           <TableHeader>
             <tr className="bg-sky-500 text-lg font-bold text-white capitalize">
               <TableCell>S.No</TableCell>
+              <TableCell>Appl. No</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Mobile</TableCell>
               {/* <TableCell>Grade Type</TableCell> */}
@@ -297,6 +298,7 @@ function UGApplication() {
               tableData.map((item, index) => (
                 <TableRow key={item._id}>
                   <TableCell>{(page - 1) * limitData + index + 1}</TableCell>
+                  <TableCell>{item.applicationNumber}</TableCell>
                   <TableCell className={`${item.paymentStatus === "paid" ? 'text-green-500' : ''}`}>{item.name}{item.paymentStatus === 'paid' ? "✔" : ''} </TableCell>
                   <TableCell>{item.mobile}</TableCell>
                   {/* <TableCell>{item.gradType || "—"}</TableCell> */}
