@@ -154,6 +154,52 @@ function UGApplication() {
   const history = useHistory();
   const handleRedirect = (id) => history.push(`/application-accept/${id}`);
 
+  const handleExportExcel = async () => {
+    try {
+      setLoading(true);
+  
+      // fetch ALL filtered data
+      const res = await AdminServices.getAllApplication(
+        1,                 // page
+        100000,            // very high limit
+        activeFilters.gradType,
+        activeFilters.pref,
+        activeFilters.status,
+        activeFilters.paidStatus,
+      );
+  
+      const allData = res.data || [];
+  
+      // convert data
+      const exportData = allData.map((item, index) => ({
+        "S.No": index + 1,
+        "Application No": item.applicationNumber,
+        "Name": item.name,
+        "Mobile": item.mobile,
+        "Preference 1": item.pref1,
+        "Preference 2": item.pref2,
+        "Payment Status": item.paymentStatus,
+        "Application Status": item.status,
+      }));
+  
+      // excel export
+      const XLSX = await import("xlsx");
+  
+      const worksheet = XLSX.utils.json_to_sheet(exportData);
+  
+      const workbook = XLSX.utils.book_new();
+  
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Applications");
+  
+      XLSX.writeFile(workbook, "Applications.xlsx");
+  
+    } catch (err) {
+      console.error("Export failed:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   return (
     <div>
       <div className="m-5">
@@ -284,13 +330,13 @@ function UGApplication() {
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={7}>
+                <TableCell colSpan={8}>
                   <p className="text-center py-4 text-gray-500">Loading...</p>
                 </TableCell>
               </TableRow>
             ) : tableData.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7}>
+                <TableCell colSpan={8}>
                   <p className="text-center py-4 text-gray-500">No applications found.</p>
                 </TableCell>
               </TableRow>
@@ -330,7 +376,15 @@ function UGApplication() {
           />
         </TableFooter>
       </TableContainer>
-
+      <div className="flex justify-end align-end">
+        <button
+          onClick={handleExportExcel}
+          className="px-4 py-2 mt-5 bg-green-500 text-white rounded hover:bg-green-600"
+        >
+          Export Excel
+        </button>
+      </div>
+      
       {isActionModalOpen && (
         <StatusModal onClose={() => setIsActionModalOpen(false)} appId={selectedAppId} reloadData={() => fetchData()} />
       )
